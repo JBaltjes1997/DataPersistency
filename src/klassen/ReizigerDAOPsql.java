@@ -13,14 +13,14 @@ public class ReizigerDAOPsql implements ReizigerDAO{
 
     @Override
     public boolean save(Reiziger reiziger) throws SQLException {
-        String query = "INSERT INTO reiziger(id, voorletters, tussenvoegsel, achternaam, geboortedatum) values(?,?,?,?,?)";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.setInt(1, reiziger.getReiziger_id());
-        st.setString(2, reiziger.getVoorletters());
-        st.setString(3, reiziger.getTussenvoegsel());
-        st.setString(4, reiziger.getAchternaam());
-        st.setDate(5, java.sql.Date.valueOf(reiziger.getGeboortedatum()));
         try{
+            String query = "INSERT INTO reiziger(id, voorletters, tussenvoegsel, achternaam, geboortedatum) values(?,?,?,?,?)";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, reiziger.getReiziger_id());
+            st.setString(2, reiziger.getVoorletters());
+            st.setString(3, reiziger.getTussenvoegsel());
+            st.setString(4, reiziger.getAchternaam());
+            st.setDate(5, java.sql.Date.valueOf(reiziger.getGeboortedatum()));
             st.executeQuery(query);
             return true;
         } catch(Exception e){
