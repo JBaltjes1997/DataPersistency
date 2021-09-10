@@ -45,8 +45,8 @@ public class Applicatie {
         System.out.println();
 
         // Maak een nieuwe reiziger aan en persisteer deze in de database
-        LocalDate gbdatum = LocalDate.of(1981, 03,14);
-        Reiziger sietske = new Reiziger(77, "S", "", "Boers", gbdatum);
+        String gbdatum = "1981-03-14";
+        Reiziger sietske = new Reiziger(77, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
         System.out.print("[Test] Eerst " + reizigers.size() + " reizigers, na ReizigerDAO.save() ");
         rdao.save(sietske);
         reizigers = rdao.findAll();

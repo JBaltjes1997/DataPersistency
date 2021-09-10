@@ -8,9 +8,10 @@ public class Reiziger {
     private String voorletters;
     private String tussenvoegsel;
     private String achternaam;
-    private LocalDate geboortedatum;
+    private Date geboortedatum;
+//    private Adres ReizigerAdres;
 
-    public Reiziger(int reiziger_id, String voorletters, String tussenvoegsel, String achternaam, LocalDate geboortedatum) {
+    public Reiziger(int reiziger_id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum) {
         this.reiziger_id = reiziger_id;
         this.voorletters = voorletters;
         this.tussenvoegsel = tussenvoegsel;
@@ -34,13 +35,35 @@ public class Reiziger {
         return achternaam;
     }
 
-    public LocalDate getGeboortedatum() {
+    public Date getGeboortedatum() {
         return geboortedatum;
     }
 
+    public void setReiziger_id(int reiziger_id) {
+        this.reiziger_id = reiziger_id;
+    }
 
+    public void setVoorletters(String voorletters) {
+        this.voorletters = voorletters;
+    }
+
+    public void setTussenvoegsel(String tussenvoegsel) {
+        this.tussenvoegsel = tussenvoegsel;
+    }
+
+    public void setAchternaam(String achternaam) {
+        this.achternaam = achternaam;
+    }
+
+    public void setGeboortedatum(Date geboortedatum) {
+        this.geboortedatum = geboortedatum;
+    }
 
     public String toString(){
-        return "idk yet";
+        if(tussenvoegsel == null ) {
+            return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ")";
+        } else {
+            return "#" + reiziger_id + ": " + voorletters + ". " + tussenvoegsel + " " + achternaam + " (" + geboortedatum + ")";
+        }
     }
 }
