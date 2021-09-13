@@ -13,7 +13,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     }
 
     @Override
-    public boolean save(Reiziger reiziger) throws SQLException {
+    public boolean save(Reiziger reiziger){
         try{
             String query = "INSERT INTO reiziger(reiziger_id, voorletters, tussenvoegsel, achternaam, geboortedatum) values(?,?,?,?,?)";
             PreparedStatement st = conn.prepareStatement(query);
@@ -22,7 +22,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setString(3, reiziger.getTussenvoegsel());
             st.setString(4, reiziger.getAchternaam());
             st.setDate(5, (Date) reiziger.getGeboortedatum());
-            st.executeQuery(query);
+            st.executeQuery();
             return true;
         } catch(Exception e){
             System.out.println(e.getMessage());
@@ -31,7 +31,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     }
 
     @Override
-    public boolean update(Reiziger reiziger)throws SQLException{
+    public boolean update(Reiziger reiziger){
         try{
             String query = "UPDATE reiziger SET reiziger_id = ? voorletters = ? tussenvoegsel = ? achternaam = ? geboortedatum = ? " +
                     "WHERE reiziger_id, voorletters, tussenvoegsel, achternaam, geboortedatum";
@@ -42,7 +42,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setString(3, reiziger.getTussenvoegsel());
             st.setString(4, reiziger.getAchternaam());
             st.setDate(5, (Date) reiziger.getGeboortedatum());
-            st.executeUpdate(query);
+            st.executeUpdate();
         } catch (Exception e){
             System.out.println(e.getMessage());
             return false;
@@ -51,12 +51,12 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     }
 
     @Override
-    public boolean delete(Reiziger reiziger) throws SQLException {
+    public boolean delete(Reiziger reiziger){
         try{
-            String query = "DELETE from reiziger WHERE naam = ? ";
+            String query = "DELETE from reiziger WHERE reiziger_id = ? ";
             PreparedStatement st = conn.prepareStatement(query);
-            st.setObject(1, reiziger.getVoorletters());
-            st.executeUpdate(query);
+            st.setInt(1, reiziger.getReiziger_id());
+            st.executeUpdate();
         } catch(Exception e){
             System.out.println(e.getMessage());
             return false;
@@ -65,7 +65,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     }
 
     @Override
-    public Reiziger findById(int id) throws SQLException{
+    public Reiziger findById(int id){
         try {
             String query = "SELECT * FROM reiziger WHERE reiziger_id = ? ";
             PreparedStatement st = conn.prepareStatement(query);
@@ -88,21 +88,24 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     }
 
     @Override
-    public List<Reiziger> findByGbDatum(String datum)throws SQLException {
+    public List<Reiziger> findByGbDatum(String datum){
+        List<Reiziger> reizigers = new ArrayList<>();
         try {
-            ArrayList<Reiziger> reizigers = new ArrayList<>();
+            String tussenVoegsel = "";
             String query = "SELECT * FROM reiziger WHERE geboortedatum = ?";
             PreparedStatement st = conn.prepareStatement(query);
-            ResultSet rs = st.executeQuery(query);
+            ResultSet rs = st.executeQuery();
             while (rs.next()){
-                Reiziger reiziger = new Reiziger(
-                        rs.getInt(1),
+                if (rs.getString(3) != null) {
+                    tussenVoegsel = rs.getString(3);
+                }
+                reizigers.add(new Reiziger(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getDate(5));
-                        reizigers.add(reiziger);
+                        rs.getDate(5)));
                 } return reizigers;
+
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
                 return null;
@@ -111,23 +114,26 @@ public class ReizigerDAOPsql implements ReizigerDAO {
 
     @Override
     public List<Reiziger> findAll()throws SQLException {
+        List<Reiziger> reizigers = new ArrayList<>();
         try {
-            ArrayList<Reiziger> reizigers = new ArrayList<>();
             String query = "SELECT * FROM reiziger";
+            String tussenVoegsel = "";
             PreparedStatement st = conn.prepareStatement(query);
-            ResultSet rs = st.executeQuery(query);
-            while(rs.next()){
-                Reiziger reiziger = new Reiziger(
-                        rs.getInt(1),
+            ResultSet rs = st.executeQuery();
+            while(rs.next()) {
+                if (rs.getString(3) != null) {
+                    tussenVoegsel = rs.getString(3);
+                }
+                reizigers.add(new Reiziger(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getDate(5));
-                        reizigers.add(reiziger);
-            }
-            return reizigers;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+                        rs.getDate(5)));
+                }
+                return reizigers;
+
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
         }
         return null;
     }

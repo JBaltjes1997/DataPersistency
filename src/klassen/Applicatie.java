@@ -22,7 +22,6 @@ public class Applicatie {
 
         ReizigerDAO reizigerDao = new ReizigerDAOPsql(getConnection());
         testReizigerDAO(reizigerDao);
-//        String url = "jdbc:postgresql://localhost:5433/ovchip?user=postgres&password=T1mmyD3Kat";
         closeConnection();
     }
     public static Connection getConnection()throws SQLException{
@@ -46,52 +45,14 @@ public class Applicatie {
 
         // Maak een nieuwe reiziger aan en persisteer deze in de database
         String gbdatum = "1981-03-14";
-        Reiziger sietske = new Reiziger(77, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
+        Reiziger sietske = new Reiziger(77, "S", null, "Boers", java.sql.Date.valueOf(gbdatum));
         System.out.print("[Test] Eerst " + reizigers.size() + " reizigers, na ReizigerDAO.save() ");
         rdao.save(sietske);
         reizigers = rdao.findAll();
         System.out.println(reizigers.size() + " reizigers\n");
 
+        rdao.delete(sietske);
+
         // Voeg aanvullende tests van de ontbrekende CRUD-operaties in.
     }
 }
-//        try{
-//            Connection conn = DriverManager.getConnection(url);
-//
-//            Statement st = conn.createStatement();
-//            String query = "SELECT * FROM reiziger";
-//
-//            ResultSet rs = st.executeQuery(query);
-//
-//            int id;
-//            String naam;
-//            String tussenvoegsel;
-//            String achternaam;
-//            Date geboortedatum;
-//
-//            System.out.println("Alle reizigers: ");
-//            while(rs.next()){
-//                id = rs.getInt("reiziger_id");
-//                naam = rs.getString("voorletters");
-//                tussenvoegsel = rs.getString("tussenvoegsel");
-//                achternaam = rs.getString("achternaam");
-//                geboortedatum = rs.getDate("geboortedatum");
-//
-//                if(tussenvoegsel == null ) {
-//                    System.out.println("    #" + id + ": " + naam + ". " + achternaam + " (" + geboortedatum + ")");
-//                } else {
-//                    System.out.println("    #" + id + ": " + naam + ". " + tussenvoegsel + " " + achternaam + " (" + geboortedatum + ")");
-//                }
-//            }
-//
-//            rs.close();
-//            st.close();
-//            conn.close();
-//
-//        } catch (SQLException sqlex){
-//            System.out.println("Niet gelukt " + sqlex.getMessage());
-//
-//        }
-//    }
-//}
-
