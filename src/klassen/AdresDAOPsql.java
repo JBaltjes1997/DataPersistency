@@ -35,8 +35,8 @@ public class AdresDAOPsql implements AdresDAO{
     @Override
     public boolean update(Adres adres) {
         try{
-            String query = "UPDATE adres SET id = ? postcode = ? huisnummer = ? straat = ? woonplaats = ? reiziger_id = ?" +
-                    "WHERE id, postcode, huisnummer, straat, woonplaats, reiziger_id";
+            String query = "UPDATE adres SET adres_id = ?, postcode = ?, huisnummer = ?, straat = ?, woonplaats = ?, reiziger_id = ?" +
+                    "WHERE adres_id = ?";
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, adres.getAdres_id());
             st.setString(2, adres.getPostcode());
@@ -44,6 +44,7 @@ public class AdresDAOPsql implements AdresDAO{
             st.setString(4, adres.getStraat());
             st.setString(5, adres.getWoonplaats());
             st.setInt(6, adres.getReiziger_id());
+            st.setInt(7, adres.getReiziger_id());
             st.executeUpdate();
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -54,7 +55,7 @@ public class AdresDAOPsql implements AdresDAO{
     @Override
     public boolean delete(Adres adres) {
         try{
-            String query = "DELETE from adres WHERE id = ? ";
+            String query = "DELETE from adres WHERE adres_id = ? ";
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, adres.getAdres_id());
             st.executeUpdate();

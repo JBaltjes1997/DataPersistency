@@ -20,22 +20,6 @@ public class Reiziger {
         this.geboortedatum = geboortedatum;
     }
 
-    public void setAdres(Adres a){
-        reizigerAdres = a;
-    }
-
-    public Adres getAdres(){
-        return reizigerAdres;
-    }
-
-    public void setOvChipkaart(OVChipkaart ova){
-        ovChipkaart = ova;
-    }
-
-    public OVChipkaart getOvChipkaart(){
-        return ovChipkaart;
-    }
-
     public int getReiziger_id() {
         return reiziger_id;
     }
@@ -74,6 +58,23 @@ public class Reiziger {
 
     public void setGeboortedatum(Date geboortedatum) {
         this.geboortedatum = geboortedatum;
+    }
+
+
+    public void setAdres(Adres a){
+        reizigerAdres = a;
+    }
+
+    public Adres getAdres(){
+        return reizigerAdres;
+    }
+
+    public void setOvChipkaart(OVChipkaart ova){
+        ovChipkaart = ova;
+    }
+
+    public OVChipkaart getOvChipkaart(){
+        return ovChipkaart;
     }
 
     public String toString(){

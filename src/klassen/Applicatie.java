@@ -62,24 +62,26 @@ public class Applicatie {
         System.out.println("\n---------- Test AdresDAO -------------");
 
         List<Adres> adressen = adao.findAll();
-        System.out.println(adressen);
+        for (Adres a : adressen) {
+            System.out.println(a);
+        }
+        System.out.println();
 
-        String gbdatum = "1963-03-02";
-        Reiziger Pieter = new Reiziger(6, "P", null, "Parker", java.sql.Date.valueOf(gbdatum));
-        rdao.save(Pieter);
+//        String gbdatum = "1963-03-15";
+//        Reiziger Peter = new Reiziger(6, "P", null, "Parker", java.sql.Date.valueOf(gbdatum));
+//        rdao.save(Peter);
 
         //create
-        Adres adr = new Adres(6, "ABCD12", "0A", "Somewhere over the Rainbowlaan", "Kansas-City", 6);
-        adao.save(adr);
+        Adres adr = new Adres(6, "ABCD12", "5", "Somewhere over the Rainbowlaan", "Kansas-City", 6);
+//        adao.save(adr);
 
-        //read
-        adao.findAll();
+//        read
+//        adao.findAll();
 
         //update
-        adao.update(adr);
+//        adao.update(adr);
 
         //delete
-        adao.delete(adr);
-        rdao.delete(Pieter);
+//        adao.delete(adr);
     }
 }
