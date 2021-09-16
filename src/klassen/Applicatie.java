@@ -21,7 +21,9 @@ public class Applicatie {
     public static void main(String[] args) throws SQLException {
 
         ReizigerDAO reizigerDao = new ReizigerDAOPsql(getConnection());
-        testReizigerDAO(reizigerDao);
+////        testReizigerDAO(reizigerDao);
+        AdresDAO adresDao = new AdresDAOPsql(getConnection());
+        testAdresDAO(adresDao, reizigerDao);
         closeConnection();
     }
     public static Connection getConnection()throws SQLException{
@@ -32,27 +34,52 @@ public class Applicatie {
         conn.close();
     }
 
-    private static void testReizigerDAO(ReizigerDAO rdao) throws SQLException {
-        System.out.println("\n---------- Test ReizigerDAO -------------");
+//    private static void testReizigerDAO(ReizigerDAO rdao) throws SQLException {
+//        System.out.println("\n---------- Test ReizigerDAO -------------");
+//
+//        // Haal alle reizigers op uit de database
+//        List<Reiziger> reizigers = rdao.findAll();
+//        System.out.println("[Test] ReizigerDAO.findAll() geeft de volgende reizigers:");
+//        for (Reiziger r : reizigers) {
+//            System.out.println(r);
+//        }
+//        System.out.println();
+//
+//        // Maak een nieuwe reiziger aan en persisteer deze in de database
+//        String gbdatum = "1981-03-14";
+//        Reiziger sietske = new Reiziger(77, "S", null, "Boers", java.sql.Date.valueOf(gbdatum));
+//        System.out.print("[Test] Eerst " + reizigers.size() + " reizigers, na ReizigerDAO.save() ");
+//        rdao.save(sietske);
+//        reizigers = rdao.findAll();
+//        System.out.println(reizigers.size() + " reizigers\n");
+//
+//        rdao.delete(sietske);
+//
+//        // Voeg aanvullende tests van de ontbrekende CRUD-operaties in.
+//    }
 
-        // Haal alle reizigers op uit de database
-        List<Reiziger> reizigers = rdao.findAll();
-        System.out.println("[Test] ReizigerDAO.findAll() geeft de volgende reizigers:");
-        for (Reiziger r : reizigers) {
-            System.out.println(r);
-        }
-        System.out.println();
+    private static void testAdresDAO(AdresDAO adao, ReizigerDAO rdao) throws SQLException{
+        System.out.println("\n---------- Test AdresDAO -------------");
 
-        // Maak een nieuwe reiziger aan en persisteer deze in de database
-        String gbdatum = "1981-03-14";
-        Reiziger sietske = new Reiziger(77, "S", null, "Boers", java.sql.Date.valueOf(gbdatum));
-        System.out.print("[Test] Eerst " + reizigers.size() + " reizigers, na ReizigerDAO.save() ");
-        rdao.save(sietske);
-        reizigers = rdao.findAll();
-        System.out.println(reizigers.size() + " reizigers\n");
+        List<Adres> adressen = adao.findAll();
+        System.out.println(adressen);
 
-        rdao.delete(sietske);
+        String gbdatum = "1963-03-02";
+        Reiziger Pieter = new Reiziger(6, "P", null, "Parker", java.sql.Date.valueOf(gbdatum));
+        rdao.save(Pieter);
 
-        // Voeg aanvullende tests van de ontbrekende CRUD-operaties in.
+        //create
+        Adres adr = new Adres(6, "ABCD12", "0A", "Somewhere over the Rainbowlaan", "Kansas-City", 6);
+        adao.save(adr);
+
+        //read
+        adao.findAll();
+
+        //update
+        adao.update(adr);
+
+        //delete
+        adao.delete(adr);
+        rdao.delete(Pieter);
     }
 }

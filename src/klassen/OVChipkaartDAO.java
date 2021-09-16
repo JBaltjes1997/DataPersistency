@@ -2,10 +2,10 @@ package klassen;
 
 import java.util.List;
 
-public interface AdresDAO{
+public interface OVChipkaartDAO {
     public boolean save(Adres adres);
     public boolean update(Adres adres);
     public boolean delete(Adres adres);
-    public Adres findByReiziger(Reiziger reiziger);
-    public List<Adres> findAll();
+    public List<OVChipkaart> findByReiziger();
+    public List<OVChipkaart> findAll();
 }

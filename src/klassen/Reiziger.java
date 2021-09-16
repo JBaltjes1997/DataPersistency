@@ -9,7 +9,8 @@ public class Reiziger {
     private String tussenvoegsel;
     private String achternaam;
     private Date geboortedatum;
-//    private Adres ReizigerAdres;
+    private Adres reizigerAdres;
+    private OVChipkaart ovChipkaart;
 
     public Reiziger(int reiziger_id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum) {
         this.reiziger_id = reiziger_id;
@@ -17,6 +18,22 @@ public class Reiziger {
         this.tussenvoegsel = tussenvoegsel;
         this.achternaam = achternaam;
         this.geboortedatum = geboortedatum;
+    }
+
+    public void setAdres(Adres a){
+        reizigerAdres = a;
+    }
+
+    public Adres getAdres(){
+        return reizigerAdres;
+    }
+
+    public void setOvChipkaart(OVChipkaart ova){
+        ovChipkaart = ova;
+    }
+
+    public OVChipkaart getOvChipkaart(){
+        return ovChipkaart;
     }
 
     public int getReiziger_id() {
@@ -61,9 +78,9 @@ public class Reiziger {
 
     public String toString(){
         if(tussenvoegsel == null ) {
-            return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ")";
+            return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ")" + reizigerAdres.toString();
         } else {
-            return "#" + reiziger_id + ": " + voorletters + ". " + tussenvoegsel + " " + achternaam + " (" + geboortedatum + ")";
+            return "#" + reiziger_id + ": " + voorletters + ". " + tussenvoegsel + " " + achternaam + " (" + geboortedatum + ")" + reizigerAdres.toString();
         }
     }
 }

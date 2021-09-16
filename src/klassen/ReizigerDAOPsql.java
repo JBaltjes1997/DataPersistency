@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ReizigerDAOPsql implements ReizigerDAO {
     private Connection conn;
+    private AdresDAO adao;
 
     public ReizigerDAOPsql(Connection conn) {
         this.conn = conn;
@@ -46,8 +47,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
         } catch (Exception e){
             System.out.println(e.getMessage());
             return false;
-        }
-        return true;
+        } return true;
     }
 
     @Override
