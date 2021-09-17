@@ -1,13 +1,10 @@
 package klassen;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OVChipkaartDAOPsql {
+public class OVChipkaartDAOPsql implements OVChipkaartDAO{
     private Connection conn;
     private Reiziger rdao;
 
@@ -15,19 +12,60 @@ public class OVChipkaartDAOPsql {
         this.conn = conn;
     }
 
-    public boolean save(){
-        return false;
+    @Override
+    public boolean save(OVChipkaart ovchipkaart){
+        try{
+            String query = "INSERT INTO ov_chipkaart(kaart_nummer, geldig_tot, klasse, saldo, reiziger_id) " +
+                    "values(?,?,?,?,?)";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, ovchipkaart.getKaart_nummer());
+            st.setDate(2, (java.sql.Date) ovchipkaart.getGeldig_tot());
+            st.setInt(3, ovchipkaart.getKlasse());
+            st.setFloat(4, ovchipkaart.getSaldo());
+            st.setInt(5, ovchipkaart.getReiziger_id());
+            st.executeQuery();
+            return true;
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
-    public boolean update(){
-        return false;
+    @Override
+    public boolean update(OVChipkaart ovchipkaart){
+        try{
+            String query = "UPDATE ov_chipkaart SET kaart_nummer = ?, geldig_tot = ?, klasse = ?, saldo = ?, reiziger_id = ? " +
+                    "WHERE reiziger_id = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, ovchipkaart.getKaart_nummer());
+            st.setDate(2, (java.sql.Date) ovchipkaart.getGeldig_tot());
+            st.setInt(3, ovchipkaart.getKlasse());
+            st.setFloat(4, ovchipkaart.getSaldo());
+            st.setInt(5, ovchipkaart.getReiziger_id());
+            st.setInt(6, ovchipkaart.getReiziger_id());
+            st.executeUpdate();
+            return true;
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
-    public boolean delete(){
-        return false;
+    @Override
+    public boolean delete(OVChipkaart ovchipkaart){
+        try{
+            String query = "DELETE from ov_chipkaart WHERE reiziger_id = ? ";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, ovchipkaart.getReiziger_id());
+            st.executeUpdate();
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
     }
 
-
+    @Override
     public List<OVChipkaart> findByReiziger(Reiziger reiziger){
         List<OVChipkaart> kaarten = new ArrayList<>();
         try {
@@ -47,7 +85,24 @@ public class OVChipkaartDAOPsql {
         return null;
     }
 
-    public List<OVChipkaart> findAll(Reiziger reiziger){
-        return null;
+    @Override
+    public List<OVChipkaart> findAll(){
+        List<OVChipkaart> ovchipkaarten = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM ov_chipkaart";
+            PreparedStatement st = conn.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()) {
+                ovchipkaarten.add(new OVChipkaart(rs.getInt(1),
+                        rs.getDate(2),
+                        rs.getInt(3),
+                        rs.getFloat(4),
+                        rs.getInt(5)));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return ovchipkaarten;
     }
 }

@@ -23,7 +23,9 @@ public class Applicatie {
         ReizigerDAO reizigerDao = new ReizigerDAOPsql(getConnection());
 ////        testReizigerDAO(reizigerDao);
         AdresDAO adresDao = new AdresDAOPsql(getConnection());
-        testAdresDAO(adresDao, reizigerDao);
+//        testAdresDAO(adresDao, reizigerDao);
+        OVChipkaartDAO ovcDAO = new OVChipkaartDAOPsql(getConnection());
+        testOVChipkaartDAO(ovcDAO, reizigerDao);
         closeConnection();
     }
     public static Connection getConnection()throws SQLException{
@@ -32,6 +34,29 @@ public class Applicatie {
 
     private static void closeConnection()throws SQLException{
         conn.close();
+    }
+
+    private static void testOVChipkaartDAO(OVChipkaartDAO ovdao, ReizigerDAO rdao) throws SQLException{
+        System.out.println("\n---------- Test OVChipkaartDAO -------------");
+        List<OVChipkaart> ovchipkaarten = ovdao.findAll();
+        for(OVChipkaart ovc : ovchipkaarten) {
+            System.out.println(ovc);
+        }
+        System.out.println();
+
+        //create
+        String vervalDatum = "2999-12-31";
+        OVChipkaart ovc = new OVChipkaart(00002, java.sql.Date.valueOf(vervalDatum), 2, 10000, 6);
+        ovdao.save(ovc);
+
+        //update
+        ovdao.update(ovc);
+
+        //read
+        ovdao.findAll();
+
+        //delete
+        ovdao.delete(ovc);
     }
 
 //    private static void testReizigerDAO(ReizigerDAO rdao) throws SQLException {
@@ -58,30 +83,29 @@ public class Applicatie {
 //        // Voeg aanvullende tests van de ontbrekende CRUD-operaties in.
 //    }
 
-    private static void testAdresDAO(AdresDAO adao, ReizigerDAO rdao) throws SQLException{
-        System.out.println("\n---------- Test AdresDAO -------------");
-
-        List<Adres> adressen = adao.findAll();
-        for (Adres a : adressen) {
-            System.out.println(a);
-        }
-        System.out.println();
-
+//    private static void testAdresDAO(AdresDAO adao, ReizigerDAO rdao) throws SQLException{
+//        System.out.println("\n---------- Test AdresDAO -------------");
+//
+//        List<Adres> adressen = adao.findAll();
+//        for (Adres a : adressen) {
+//            System.out.println(a);
+//        }
+//        System.out.println();
+//
 //        String gbdatum = "1963-03-15";
 //        Reiziger Peter = new Reiziger(6, "P", null, "Parker", java.sql.Date.valueOf(gbdatum));
 //        rdao.save(Peter);
-
-        //create
-        Adres adr = new Adres(6, "ABCD12", "5", "Somewhere over the Rainbowlaan", "Kansas-City", 6);
+//
+//        //create
+//        Adres adr = new Adres(6, "ABCD12", "5", "Somewhere over the Rainbowlaan", "Kansas-City", 6);
 //        adao.save(adr);
-
-//        read
+//
+////        read
 //        adao.findAll();
-
-        //update
+//
+//        //update
 //        adao.update(adr);
-
-        //delete
+//
+//        //delete
 //        adao.delete(adr);
     }
-}

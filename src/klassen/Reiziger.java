@@ -1,6 +1,7 @@
 package klassen;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Reiziger {
@@ -76,6 +77,10 @@ public class Reiziger {
     public OVChipkaart getOvChipkaart(){
         return ovChipkaart;
     }
+
+//    public ArrayList<OVChipkaart> getOVChipkaarten(){
+//        return OVChipkaart.get;
+//    }
 
     public String toString(){
         if(tussenvoegsel == null ) {

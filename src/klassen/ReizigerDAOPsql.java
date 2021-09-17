@@ -37,7 +37,6 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             String query = "UPDATE reiziger SET reiziger_id = ?, voorletters = ?, tussenvoegsel = ?, achternaam = ?, geboortedatum = ? " +
                     "WHERE reiziger_id = ?";
             PreparedStatement st = conn.prepareStatement(query);
-
             st.setInt(1, reiziger.getReiziger_id());
             st.setString(2, reiziger.getVoorletters());
             st.setString(3, reiziger.getTussenvoegsel());
@@ -106,7 +105,6 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                         rs.getString(4),
                         rs.getDate(5)));
                 } return reizigers;
-
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
                 return null;

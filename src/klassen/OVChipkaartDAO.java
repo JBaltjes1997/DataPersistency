@@ -3,9 +3,9 @@ package klassen;
 import java.util.List;
 
 public interface OVChipkaartDAO {
-    public boolean save(Adres adres);
-    public boolean update(Adres adres);
-    public boolean delete(Adres adres);
-    public List<OVChipkaart> findByReiziger();
+    public boolean save(OVChipkaart ovchipkaart);
+    public boolean update(OVChipkaart ovchipkaart);
+    public boolean delete(OVChipkaart ovchipkaart);
+    public List<OVChipkaart> findByReiziger(Reiziger reiziger);
     public List<OVChipkaart> findAll();
 }
