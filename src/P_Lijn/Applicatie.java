@@ -5,11 +5,12 @@ package P_Lijn;
 //import Persistency.dataBaseQuery;
 import P_Lijn.DAO.AdresDAO;
 import P_Lijn.DAO.OVChipkaartDAO;
+import P_Lijn.DAO.ProductDAO;
 import P_Lijn.DAO.ReizigerDAO;
 import P_Lijn.DAOPsql.AdresDAOPsql;
 import P_Lijn.DAOPsql.OVChipkaartDAOPsql;
+import P_Lijn.DAOPsql.ProductDAOPsql;
 import P_Lijn.DAOPsql.ReizigerDAOPsql;
-import P_Lijn.klassen.Adres;
 import P_Lijn.klassen.OVChipkaart;
 import P_Lijn.klassen.Reiziger;
 //
@@ -31,6 +32,8 @@ public class Applicatie {
 //        testAdresDAO(adresDao, reizigerDao);
         OVChipkaartDAO ovcDAO = new OVChipkaartDAOPsql(getConnection());
 //        testOVChipkaartDAO(ovcDAO, reizigerDao);
+        ProductDAO pDAO = new ProductDAOPsql(getConnection());
+//        testProductDAO(pDAO);
         closeConnection();
     }
 

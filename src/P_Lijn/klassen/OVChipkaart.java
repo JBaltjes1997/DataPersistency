@@ -9,6 +9,7 @@ public class OVChipkaart {
     public float saldo;
     public int reiziger_id;
     public Reiziger reiziger;
+    public Product product;
 
     public OVChipkaart(int kaart_nummer, Date geldig_tot, int klasse, float saldo, int reiziger_id) {
         this.kaart_nummer = kaart_nummer;
@@ -64,6 +65,10 @@ public class OVChipkaart {
 
     public void setReiziger_id(int reiziger_id) {
         this.reiziger_id = reiziger_id;
+    }
+
+    public Product getProducten(){
+        return product;
     }
 
     public String toString(){

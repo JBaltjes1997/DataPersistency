@@ -5,6 +5,7 @@ public class Product {
     public String naam;
     public String beschrijving;
     public float prijs;
+    public OVChipkaart ovchipkaart;
 
     public Product(int product_nummer, String naam, String beschrijving, float prijs) {
         this.product_nummer = product_nummer;
@@ -45,7 +46,11 @@ public class Product {
         this.prijs = prijs;
     }
 
+    public OVChipkaart getOvchipkaart(){
+        return ovchipkaart;
+    }
+
     public String toString(){
-        return "idk";
+        return "p_nummer: " + product_nummer + " naam: " + naam + " beschrijving: " + beschrijving + " prijs: " + prijs;
     }
 }
