@@ -1,13 +1,28 @@
-package klassen;
+package P_Lijn.DAOPsql;
+
+import P_Lijn.DAO.AdresDAO;
+import P_Lijn.DAO.OVChipkaartDAO;
+import P_Lijn.DAO.ReizigerDAO;
+import P_Lijn.klassen.Reiziger;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReizigerDAOPsql implements ReizigerDAO {
     private Connection conn;
     private AdresDAO adao;
+    private OVChipkaartDAO ovdao;
+    // ov dao toevoegen, for-ech loop toepassen
+
+
+    public AdresDAO getAdao() {
+        return adao;
+    }
+
+    public void setAdao(AdresDAO adao) {
+        this.adao = adao;
+    }
 
     public ReizigerDAOPsql(Connection conn) {
         this.conn = conn;
@@ -24,6 +39,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setString(4, reiziger.getAchternaam());
             st.setDate(5, (Date) reiziger.getGeboortedatum());
             st.executeQuery();
+            adao.save(reiziger.getAdres());
             return true;
         } catch(Exception e){
             System.out.println(e.getMessage());
@@ -65,11 +81,14 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     }
 
     @Override
-    public Reiziger findById(int id){
+    public Reiziger findById(int id){  // adao + ovdao toevoegen zodat alle info returned wordt
         try {
             String query = "SELECT * FROM reiziger WHERE reiziger_id = ? ";
             PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, id);
             ResultSet rs = st.executeQuery(query);
+//            adao.findAll();
+//            ovdao.findByReiziger();
             if(rs.next()){
                 Reiziger reiziger = new Reiziger(
                         rs.getInt(1),

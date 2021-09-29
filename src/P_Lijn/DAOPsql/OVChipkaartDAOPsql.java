@@ -1,10 +1,14 @@
-package klassen;
+package P_Lijn.DAOPsql;
+
+import P_Lijn.DAO.OVChipkaartDAO;
+import P_Lijn.klassen.OVChipkaart;
+import P_Lijn.klassen.Reiziger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OVChipkaartDAOPsql implements OVChipkaartDAO{
+public class OVChipkaartDAOPsql implements OVChipkaartDAO {
     private Connection conn;
     private Reiziger rdao;
 
@@ -72,13 +76,15 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO{
             String query = "SELECT * FROM ov_chipkaart";
             PreparedStatement st = conn.prepareStatement(query);
             ResultSet rs = st.executeQuery();
-            while(rs.next()) {
+            while(rs.next()) {  // ovchipkaart moet extra variabele met Reiziger krijgen
                 kaarten.add(new OVChipkaart(rs.getInt(1),
                         rs.getDate(2),
                         rs.getInt(3),
                         rs.getFloat(4),
                         rs.getInt(5)));
+
             } return kaarten;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

@@ -1,10 +1,15 @@
-package klassen;
+package P_Lijn.DAOPsql;
+
+import P_Lijn.klassen.Adres;
+import P_Lijn.DAO.AdresDAO;
+import P_Lijn.DAO.ReizigerDAO;
+import P_Lijn.klassen.Reiziger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdresDAOPsql implements AdresDAO{
+public class AdresDAOPsql implements AdresDAO {
     private Connection conn;
     private ReizigerDAO rdao;
 
@@ -68,11 +73,29 @@ public class AdresDAOPsql implements AdresDAO{
 
     @Override
     public Adres findByReiziger(Reiziger reiziger) {
+//        try {
+//            String query = "SELECT * FROM adres WHERE reiziger_id = ?";
+//            PreparedStatement st = conn.prepareStatement(query);
+//            ResultSet rs = st.executeQuery();
+//            Adres reizigerAdres = new Adres(rs.getInt(1),
+//                    rs.getString(2),
+//                    rs.getString(3),
+//                    rs.getString(4),
+//                    rs.getString(5),
+//                    rs.getInt(6));
+//            return reizigerAdres;
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//            return null;
+//        }
+
         try {
-            String query = "SELECT * FROM adres WHERE postcode = ?";
+            String query = "SELECT * FROM adres WHERE reiziger_id = ?";
             PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, reiziger.getReiziger_id());
             ResultSet rs = st.executeQuery();
-            Adres reizigerAdres = new Adres(rs.getInt(1),
+            Adres reizigerAdres = new Adres(
+                    rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
@@ -84,6 +107,7 @@ public class AdresDAOPsql implements AdresDAO{
             return null;
         }
     }
+
 
     @Override
     public List<Adres> findAll() {
@@ -99,8 +123,7 @@ public class AdresDAOPsql implements AdresDAO{
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6)));
-            }
-            return adressen;
+            } return adressen;
         } catch (SQLException e){
             System.out.println(e.getMessage());
             return null;

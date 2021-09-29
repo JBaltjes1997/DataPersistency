@@ -1,4 +1,4 @@
-package klassen;
+package P_Lijn.klassen;
 
 import java.util.Date;
 
@@ -67,6 +67,6 @@ public class OVChipkaart {
     }
 
     public String toString(){
-        return kaart_nummer + " " + geldig_tot + " " + klasse + " " + saldo + " " + reiziger_id ;
+        return "nummer: " + kaart_nummer + "    geldig tot: " + geldig_tot + "    klasse: " + klasse + "    saldo: €" + saldo + "    reiziger_id: " + reiziger_id ;
     }
 }

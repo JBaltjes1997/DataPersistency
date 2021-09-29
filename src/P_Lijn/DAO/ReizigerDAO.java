@@ -1,4 +1,6 @@
-package klassen;
+package P_Lijn.DAO;
+
+import P_Lijn.klassen.Reiziger;
 
 import java.sql.SQLException;
 import java.util.List;

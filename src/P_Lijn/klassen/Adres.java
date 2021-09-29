@@ -1,4 +1,4 @@
-package klassen;
+package P_Lijn.klassen;
 
 public class Adres {
     private int adres_id;
@@ -8,13 +8,13 @@ public class Adres {
     private String woonplaats;
     private int reiziger_id;
 
-    public Adres(int adres_id, String postcode, String huisnummer, String straat, String woonplaats, int reiziiger_id) {
+    public Adres(int adres_id, String postcode, String huisnummer, String straat, String woonplaats, int reiziger_id) {
         this.adres_id = adres_id;
         this.postcode = postcode;
         this.huisnummer = huisnummer;
         this.straat = straat;
         this.woonplaats = woonplaats;
-        this.reiziger_id = reiziiger_id;
+        this.reiziger_id = reiziger_id;
     }
 
     public int getAdres_id() {
@@ -61,11 +61,11 @@ public class Adres {
         return reiziger_id;
     }
 
-    public void setReiziger_id(int reiziiger_id) {
-        this.reiziger_id = reiziiger_id;
+    public void setReiziger_id(int reiziger_id) {
+        this.reiziger_id = reiziger_id;
     }
 
     public String toString(){
-        return "#" + adres_id + " " + postcode + " " + huisnummer + " " + straat + " " + woonplaats + " " + reiziger_id;
+        return "Adres_id #" + adres_id + " postcode: " + postcode + " straat: " + straat + " " + huisnummer + " woonplaats: " + woonplaats + " r.id: " + reiziger_id;
     }
 }

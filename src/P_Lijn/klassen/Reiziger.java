@@ -1,6 +1,5 @@
-package klassen;
+package P_Lijn.klassen;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,7 +10,7 @@ public class Reiziger {
     private String achternaam;
     private Date geboortedatum;
     private Adres reizigerAdres;
-    private OVChipkaart ovChipkaart;
+    private ArrayList<OVChipkaart> ovchipkaarten;
 
     public Reiziger(int reiziger_id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum) {
         this.reiziger_id = reiziger_id;
@@ -70,19 +69,17 @@ public class Reiziger {
         return reizigerAdres;
     }
 
-    public void setOvChipkaart(OVChipkaart ova){
-        ovChipkaart = ova;
+
+    public void setOvchipkaarten(ArrayList<OVChipkaart> ovchipkaarten) {
+        this.ovchipkaarten = ovchipkaarten;
     }
 
-    public OVChipkaart getOvChipkaart(){
-        return ovChipkaart;
+    public ArrayList<OVChipkaart> getOvchipkaarten() {
+        return ovchipkaarten;
     }
 
-//    public ArrayList<OVChipkaart> getOVChipkaarten(){
-//        return OVChipkaart.get;
-//    }
 
-    public String toString(){
+    public String toString(){   // OVChipkaarten in toString toevoegen
         if(tussenvoegsel == null ) {
             return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ")" + reizigerAdres.toString();
         } else {

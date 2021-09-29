@@ -1,4 +1,7 @@
-package klassen;
+package P_Lijn.DAO;
+
+import P_Lijn.klassen.Adres;
+import P_Lijn.klassen.Reiziger;
 
 import java.util.List;
 
