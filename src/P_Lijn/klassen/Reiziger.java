@@ -81,9 +81,9 @@ public class Reiziger {
 
     public String toString(){   // OVChipkaarten in toString toevoegen
         if(tussenvoegsel == null ) {
-            return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ")" + reizigerAdres.toString();
+            return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ") " + reizigerAdres.toString();
         } else {
-            return "#" + reiziger_id + ": " + voorletters + ". " + tussenvoegsel + " " + achternaam + " (" + geboortedatum + ")" + reizigerAdres.toString();
+            return "#" + reiziger_id + ": " + voorletters + ". " + tussenvoegsel + " " + achternaam + " (" + geboortedatum + ") " + reizigerAdres.toString();
         }
     }
 }

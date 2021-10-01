@@ -20,14 +20,6 @@ public class OVChipkaart {
         this.reiziger_id = reiziger_id;
     }
 
-    public void setReizgier(Reiziger r){
-        this.reiziger = r;
-    }
-
-    public Reiziger getReiziger(){
-        return reiziger;
-    }
-
     public int getKaart_nummer() {
         return kaart_nummer;
     }
@@ -66,6 +58,18 @@ public class OVChipkaart {
 
     public void setReiziger_id(int reiziger_id) {
         this.reiziger_id = reiziger_id;
+    }
+
+    public void setReiziger(Reiziger reiziger) {
+        this.reiziger = reiziger;
+    }
+
+    public Reiziger getReiziger(){
+        return reiziger;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Product getProduct(){

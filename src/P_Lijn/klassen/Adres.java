@@ -83,6 +83,7 @@ public class Adres {
     }
 
     public String toString(){
-        return "Adres_id #" + adres_id + " postcode: " + postcode + " straat: " + straat + " " + huisnummer + " woonplaats: " + woonplaats + " r.id: " + reiziger_id;
+        return String.format("# %s postcode: %s straat: %s huisnummer: %s woonplaats: %s reiziger_id: %d",
+                adres_id, postcode, straat, huisnummer, woonplaats, reiziger_id);
     }
 }
