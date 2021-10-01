@@ -87,7 +87,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery(query);
-//            adao.findAll();
+
 //            ovdao.findByReiziger();
             if(rs.next()){
                 Reiziger reiziger = new Reiziger(
@@ -96,6 +96,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5));
+                reiziger.setAdres(adao.findByReiziger(reiziger));
                 return reiziger;
             } else{
                 return null;
@@ -142,14 +143,17 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                 if (rs.getString(3) != null) {
                     tussenVoegsel = rs.getString(3);
                 }
-                reizigers.add(new Reiziger(rs.getInt(1),
+               Reiziger reiziger = new Reiziger(
+//                reizigers.add(new Reiziger(
+                rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getDate(5)));
+                        rs.getDate(5));
+                reiziger.setAdres(adao.findByReiziger(reiziger));
+                reizigers.add(reiziger);
                 }
                 return reizigers;
-
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
         }

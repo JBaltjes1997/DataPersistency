@@ -4,10 +4,10 @@ public class Product {
     public int product_nummer;
     public String naam;
     public String beschrijving;
-    public float prijs;
+    public double prijs;
     public OVChipkaart ovchipkaart;
 
-    public Product(int product_nummer, String naam, String beschrijving, float prijs) {
+    public Product(int product_nummer, String naam, String beschrijving, double prijs) {
         this.product_nummer = product_nummer;
         this.naam = naam;
         this.beschrijving = beschrijving;
@@ -38,11 +38,11 @@ public class Product {
         this.beschrijving = beschrijving;
     }
 
-    public float getPrijs() {
+    public double getPrijs() {
         return prijs;
     }
 
-    public void setPrijs(float prijs) {
+    public void setPrijs(double prijs) {
         this.prijs = prijs;
     }
 

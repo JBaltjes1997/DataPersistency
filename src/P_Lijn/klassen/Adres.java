@@ -1,5 +1,7 @@
 package P_Lijn.klassen;
 
+import java.util.Objects;
+
 public class Adres {
     private int adres_id;
     private String postcode;
@@ -57,12 +59,27 @@ public class Adres {
         this.woonplaats = woonplaats;
     }
 
+
     public int getReiziger_id() {
         return reiziger_id;
     }
 
     public void setReiziger_id(int reiziger_id) {
         this.reiziger_id = reiziger_id;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Adres adres = (Adres) o;
+        return reiziger_id == adres.reiziger_id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reiziger_id);
     }
 
     public String toString(){

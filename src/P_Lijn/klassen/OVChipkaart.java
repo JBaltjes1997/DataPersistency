@@ -1,6 +1,7 @@
 package P_Lijn.klassen;
 
 import java.util.Date;
+import java.util.List;
 
 public class OVChipkaart {
     public int kaart_nummer;
@@ -67,7 +68,7 @@ public class OVChipkaart {
         this.reiziger_id = reiziger_id;
     }
 
-    public Product getProducten(){
+    public Product getProduct(){
         return product;
     }
 
