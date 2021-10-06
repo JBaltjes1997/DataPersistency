@@ -83,7 +83,11 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
                         rs.getFloat(4),
                         rs.getInt(5)));
 
-            } return kaarten;
+                // in de while-loop de nieuwe ovchipkaart zoeken
+                // aan die ene kaart de rdao ovchipkaart.setReiziger(rdao.getReiziger_id())
+
+            }
+            return kaarten;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

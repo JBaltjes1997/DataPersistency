@@ -30,8 +30,8 @@ public class Applicatie {
 
         ReizigerDAOPsql reizigerDao = new ReizigerDAOPsql(getConnection());
         AdresDAOPsql adresDao = new AdresDAOPsql(getConnection());
-        reizigerDao.setAdao(adresDao);
-        testReizigerDAO(reizigerDao);
+//        reizigerDao.setAdao(adresDao);
+//        testReizigerDAO(reizigerDao);
 //        testAdresDAO(adresDao, reizigerDao);
         OVChipkaartDAO ovcDAO = new OVChipkaartDAOPsql(getConnection());
 //        testOVChipkaartDAO(ovcDAO, reizigerDao);

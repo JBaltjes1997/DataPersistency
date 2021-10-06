@@ -60,6 +60,11 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setDate(5, (Date) reiziger.getGeboortedatum());
             st.setInt(6, reiziger.getReiziger_id());
             st.executeUpdate();
+            if(adao.findByReiziger(reiziger) != null) {
+                adao.update(reiziger.getAdres());
+            } else {
+                adao.save(reiziger.getAdres());
+            }
         } catch (Exception e){
             System.out.println(e.getMessage());
             return false;
@@ -73,6 +78,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, reiziger.getReiziger_id());
             st.executeUpdate();
+            adao.delete(reiziger.getAdres());
         } catch(Exception e){
             System.out.println(e.getMessage());
             return false;
