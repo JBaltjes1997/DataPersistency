@@ -73,22 +73,6 @@ public class AdresDAOPsql implements AdresDAO {
 
     @Override
     public Adres findByReiziger(Reiziger reiziger) {
-//        try {
-//            String query = "SELECT * FROM adres WHERE reiziger_id = ?";
-//            PreparedStatement st = conn.prepareStatement(query);
-//            ResultSet rs = st.executeQuery();
-//            Adres reizigerAdres = new Adres(rs.getInt(1),
-//                    rs.getString(2),
-//                    rs.getString(3),
-//                    rs.getString(4),
-//                    rs.getString(5),
-//                    rs.getInt(6));
-//            return reizigerAdres;
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//            return null;
-//        }
-
         try {
             String query = "SELECT * FROM adres WHERE reiziger_id = ?";
             PreparedStatement st = conn.prepareStatement(query);
@@ -132,5 +116,3 @@ public class AdresDAOPsql implements AdresDAO {
         }
     }
 }
-
-// kijk

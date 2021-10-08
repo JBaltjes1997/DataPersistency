@@ -1,6 +1,7 @@
 package P_Lijn.DAOPsql;
 
 import P_Lijn.DAO.OVChipkaartDAO;
+import P_Lijn.DAO.ReizigerDAO;
 import P_Lijn.klassen.OVChipkaart;
 import P_Lijn.klassen.Reiziger;
 
@@ -10,10 +11,14 @@ import java.util.List;
 
 public class OVChipkaartDAOPsql implements OVChipkaartDAO {
     private Connection conn;
-    private Reiziger rdao;
+    private ReizigerDAO rdao;
 
     public OVChipkaartDAOPsql(Connection conn) {
         this.conn = conn;
+    }
+
+    public void setRdao(ReizigerDAO rdao) {
+        this.rdao = rdao;
     }
 
     @Override
@@ -73,21 +78,26 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
     public List<OVChipkaart> findByReiziger(Reiziger reiziger){
         List<OVChipkaart> kaarten = new ArrayList<>();
         try {
-            String query = "SELECT * FROM ov_chipkaart";
+            String query = "SELECT * FROM ov_chipkaart WHERE reiziger_id = ? ";
             PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, reiziger.getReiziger_id());
             ResultSet rs = st.executeQuery();
             while(rs.next()) {  // ovchipkaart moet extra variabele met Reiziger krijgen
-                kaarten.add(new OVChipkaart(rs.getInt(1),
+                OVChipkaart ovc = new OVChipkaart(rs.getInt(1),
                         rs.getDate(2),
                         rs.getInt(3),
                         rs.getFloat(4),
-                        rs.getInt(5)));
+                        rs.getInt(5));
+
+                ovc.setReiziger(reiziger);
+                kaarten.add(ovc);
+//                OVChipkaart.setReiziger(rdao.getReiziger_id());
 
                 // in de while-loop de nieuwe ovchipkaart zoeken
                 // aan die ene kaart de rdao ovchipkaart.setReiziger(rdao.getReiziger_id())
-
             }
             return kaarten;
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -103,11 +113,13 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
             PreparedStatement st = conn.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while(rs.next()) {
-                ovchipkaarten.add(new OVChipkaart(rs.getInt(1),
+                OVChipkaart ovc = new OVChipkaart(rs.getInt(1),
                         rs.getDate(2),
                         rs.getInt(3),
                         rs.getFloat(4),
-                        rs.getInt(5)));
+                        rs.getInt(5));
+                ovc.setReiziger(rdao.findById(ovc.getReiziger_id()));
+                ovchipkaarten.add(ovc);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

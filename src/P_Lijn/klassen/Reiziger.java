@@ -79,11 +79,13 @@ public class Reiziger {
     }
 
 
-    public String toString(){   // OVChipkaarten in toString toevoegen
+    public String toString(){
         if(tussenvoegsel == null ) {
-            return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ") " + reizigerAdres.toString();
+            return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ") " +
+                    reizigerAdres.toString() + " " + ovchipkaarten.toString();
         } else {
-            return "#" + reiziger_id + ": " + voorletters + ". " + tussenvoegsel + " " + achternaam + " (" + geboortedatum + ") " + reizigerAdres.toString();
+            return "#" + reiziger_id + ": " + voorletters + ". " + tussenvoegsel + " " + achternaam +
+                    " (" + geboortedatum + ") " + reizigerAdres.toString() + " " + ovchipkaarten.toString();
         }
     }
 }

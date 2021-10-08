@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/DataPersistency_Slijn_ConnectMetGit" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/OVChipkaart_hibernate" vcs="Git" />
   </component>
 </project>

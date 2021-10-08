@@ -30,12 +30,15 @@ public class Applicatie {
 
         ReizigerDAOPsql reizigerDao = new ReizigerDAOPsql(getConnection());
         AdresDAOPsql adresDao = new AdresDAOPsql(getConnection());
-//        reizigerDao.setAdao(adresDao);
+        OVChipkaartDAOPsql ovcDAO = new OVChipkaartDAOPsql(getConnection());
+        ProductDAO pDAO = new ProductDAOPsql(getConnection());
+        reizigerDao.setAdao(adresDao);
 //        testReizigerDAO(reizigerDao);
 //        testAdresDAO(adresDao, reizigerDao);
-        OVChipkaartDAO ovcDAO = new OVChipkaartDAOPsql(getConnection());
-//        testOVChipkaartDAO(ovcDAO, reizigerDao);
-        ProductDAO pDAO = new ProductDAOPsql(getConnection());
+        reizigerDao.setOvdao(ovcDAO);
+        ovcDAO.setRdao(reizigerDao);
+        testOVChipkaartDAO(ovcDAO, reizigerDao);
+
 //        testProductDAO(pDAO);
         closeConnection();
     }
@@ -121,11 +124,13 @@ public class Applicatie {
         String gbdatum = "1963-03-15";
         Reiziger Peter = new Reiziger(6, "P", null, "Parker", java.sql.Date.valueOf(gbdatum));
 
-        //create
-        String vervalDatum = "2999-12-31";
-        OVChipkaart ovc = new OVChipkaart(00002, java.sql.Date.valueOf(vervalDatum), 2, 10000, 6);
 
-        ovdao.save(ovc);
+//
+//        //create
+//        String vervalDatum = "2999-12-31";
+//        OVChipkaart ovc = new OVChipkaart(00002, java.sql.Date.valueOf(vervalDatum), 2, 10000, 6);
+
+//        ovdao.save(ovc);
 //
 //        //update
 //        ovdao.update(ovc);
