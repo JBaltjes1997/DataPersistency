@@ -88,7 +88,6 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
                         rs.getInt(3),
                         rs.getFloat(4),
                         rs.getInt(5));
-
                 ovc.setReiziger(reiziger);
                 kaarten.add(ovc);
 //                OVChipkaart.setReiziger(rdao.getReiziger_id());
@@ -97,8 +96,6 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
                 // aan die ene kaart de rdao ovchipkaart.setReiziger(rdao.getReiziger_id())
             }
             return kaarten;
-
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -113,18 +110,18 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
             PreparedStatement st = conn.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             while(rs.next()) {
-                OVChipkaart ovc = new OVChipkaart(rs.getInt(1),
+                OVChipkaart ovc = new OVChipkaart(
+                        rs.getInt(1),
                         rs.getDate(2),
                         rs.getInt(3),
                         rs.getFloat(4),
                         rs.getInt(5));
                 ovc.setReiziger(rdao.findById(ovc.getReiziger_id()));
                 ovchipkaarten.add(ovc);
-            }
+            } return ovchipkaarten;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
         }
-        return ovchipkaarten;
+        return null;
     }
 }

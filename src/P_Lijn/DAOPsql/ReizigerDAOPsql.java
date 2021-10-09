@@ -3,6 +3,7 @@ package P_Lijn.DAOPsql;
 import P_Lijn.DAO.AdresDAO;
 import P_Lijn.DAO.OVChipkaartDAO;
 import P_Lijn.DAO.ReizigerDAO;
+import P_Lijn.klassen.OVChipkaart;
 import P_Lijn.klassen.Reiziger;
 
 import java.sql.*;
@@ -13,6 +14,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     private Connection conn;
     private AdresDAO adao;
     private OVChipkaartDAO ovdao;
+//    private ArrayList<OVChipkaartDAO> ovdao;
     // ov dao toevoegen, for-ech loop toepassen
 
 
@@ -101,8 +103,6 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery(query);
-
-//            ovdao.findByReiziger();
             if(rs.next()){
                 Reiziger reiziger = new Reiziger(
                         rs.getInt(1),
@@ -111,6 +111,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                         rs.getString(4),
                         rs.getDate(5));
                 reiziger.setAdres(adao.findByReiziger(reiziger));
+                reiziger.setOvchipkaarten((ArrayList<OVChipkaart>) ovdao.findByReiziger(reiziger));
                 return reiziger;
             } else{
                 return null;
@@ -158,16 +159,15 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                     tussenVoegsel = rs.getString(3);
                 }
                Reiziger reiziger = new Reiziger(
-//                reizigers.add(new Reiziger(
                 rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5));
                 reiziger.setAdres(adao.findByReiziger(reiziger));
+                reiziger.setOvchipkaarten((ArrayList<OVChipkaart>) ovdao.findByReiziger(reiziger));
                 reizigers.add(reiziger);
-                }
-                return reizigers;
+                } return reizigers;
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
         }

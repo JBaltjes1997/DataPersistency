@@ -31,14 +31,15 @@ public class Applicatie {
         ReizigerDAOPsql reizigerDao = new ReizigerDAOPsql(getConnection());
         AdresDAOPsql adresDao = new AdresDAOPsql(getConnection());
         OVChipkaartDAOPsql ovcDAO = new OVChipkaartDAOPsql(getConnection());
-        ProductDAO pDAO = new ProductDAOPsql(getConnection());
+        ProductDAOPsql pDAO = new ProductDAOPsql(getConnection());
+
         reizigerDao.setAdao(adresDao);
-//        testReizigerDAO(reizigerDao);
-//        testAdresDAO(adresDao, reizigerDao);
         reizigerDao.setOvdao(ovcDAO);
         ovcDAO.setRdao(reizigerDao);
-        testOVChipkaartDAO(ovcDAO, reizigerDao);
 
+//        testReizigerDAO(reizigerDao);
+//        testAdresDAO(adresDao, reizigerDao);
+        testOVChipkaartDAO(ovcDAO, reizigerDao);
 //        testProductDAO(pDAO);
         closeConnection();
     }
@@ -121,25 +122,39 @@ public class Applicatie {
         }
         System.out.println();
 
-        String gbdatum = "1963-03-15";
-        Reiziger Peter = new Reiziger(6, "P", null, "Parker", java.sql.Date.valueOf(gbdatum));
-
+//        List<Reiziger> reizigers = rdao.findAll();
+//        System.out.println("[Test] ReizigerDAO.findAll() geeft de volgende reizigers:");
+//        for (Reiziger r : reizigers) {
+//            System.out.println(r);
+//        }
+//        System.out.println();
+//
+//        String gbdatum = "1963-03-15";
+//        Reiziger Peter = new Reiziger(6, "P", null, "Parker", java.sql.Date.valueOf(gbdatum));
 
 //
 //        //create
 //        String vervalDatum = "2999-12-31";
 //        OVChipkaart ovc = new OVChipkaart(00002, java.sql.Date.valueOf(vervalDatum), 2, 10000, 6);
-
-//        ovdao.save(ovc);
+//        String vervalDatum2 = "2030-12-31";
+//        OVChipkaart ovc2 = new OVChipkaart(00003, java.sql.Date.valueOf(vervalDatum2), 2, 90000, 6);
+//
+//        ovdao.save(ovc2);
 //
 //        //update
 //        ovdao.update(ovc);
 //
 //        //read
 //        ovdao.findAll();
+//        List<OVChipkaart> ovchipkaarten = ovdao.findByReiziger(Peter);
+//        for(OVChipkaart ovc : ovchipkaarten) {
+//            System.out.println(ovc);
+//        }
+//        System.out.println();
+
 //
 //        //delete
-//        ovdao.delete(ovc);
+//        ovdao.delete(ovc2);
 
 
         // de OVChipkaart moet ook de reiziger returnen, en vice verza
