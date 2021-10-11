@@ -1,5 +1,6 @@
 package P_Lijn.DAOPsql;
 
+import P_Lijn.DAO.OVChipkaartDAO;
 import P_Lijn.DAO.ProductDAO;
 import P_Lijn.klassen.Product;
 import P_Lijn.klassen.Reiziger;
@@ -13,9 +14,14 @@ import java.util.List;
 
 public class ProductDAOPsql implements ProductDAO {
     private Connection conn;
+    private OVChipkaartDAO ovcDAO;
 
     public ProductDAOPsql(Connection conn) {
         this.conn = conn;
+    }
+
+    public void setOvcDAO(OVChipkaartDAO ovcDAO) {
+        this.ovcDAO = ovcDAO;
     }
 
     @Override
@@ -46,6 +52,7 @@ public class ProductDAOPsql implements ProductDAO {
             st.setString(2, product.getNaam());
             st.setString(3, product.getBeschrijving());
             st.setDouble(4, product.getPrijs());
+            st.setInt(5, product.getProduct_nummer());
             st.executeUpdate();
             return true;
         } catch (Exception e){
@@ -66,6 +73,11 @@ public class ProductDAOPsql implements ProductDAO {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<Product> findByOVChipkaart() {
+        return null;
     }
 
     @Override

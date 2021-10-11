@@ -81,8 +81,13 @@ public class Reiziger {
 
     public String toString(){
         if(tussenvoegsel == null ) {
-            return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ") " +
-                    reizigerAdres.toString() + " " + ovchipkaarten.toString();
+            if(reizigerAdres == null){
+                return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ") " +
+                         " " + ovchipkaarten.toString();
+            } else {
+                return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ") " +
+                        reizigerAdres.toString() + " " + ovchipkaarten.toString();
+            }
         } else {
             return "#" + reiziger_id + ": " + voorletters + ". " + tussenvoegsel + " " + achternaam +
                     " (" + geboortedatum + ") " + reizigerAdres.toString() + " " + ovchipkaarten.toString();

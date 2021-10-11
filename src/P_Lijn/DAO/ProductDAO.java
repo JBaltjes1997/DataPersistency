@@ -9,4 +9,5 @@ public interface ProductDAO {
     public boolean update(Product product);
     public boolean delete(Product product);
     public List<Product> findAll();
+    public List<Product> findByOVChipkaart();
 }

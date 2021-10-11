@@ -36,11 +36,12 @@ public class Applicatie {
         reizigerDao.setAdao(adresDao);
         reizigerDao.setOvdao(ovcDAO);
         ovcDAO.setRdao(reizigerDao);
+        pDAO.setOvcDAO(ovcDAO);
 
 //        testReizigerDAO(reizigerDao);
-//        testAdresDAO(adresDao, reizigerDao);
+        testAdresDAO(adresDao, reizigerDao);
         testOVChipkaartDAO(ovcDAO, reizigerDao);
-//        testProductDAO(pDAO);
+//        testProductDAO(pDAO, ovcDAO);
         closeConnection();
     }
 
@@ -80,11 +81,11 @@ public class Applicatie {
         System.out.println("\n---------- Test AdresDAO -------------");
 
         //read
-        List<Adres> adressen = adao.findAll();
-        for (Adres a : adressen) {
-            System.out.println(a);
-            }
-        System.out.println();
+//        List<Adres> adressen = adao.findAll();
+//        for (Adres a : adressen) {
+//            System.out.println(a);
+//            }
+//        System.out.println();
 
         //create
 //        String gbdatum = "1963-03-15";
@@ -129,47 +130,45 @@ public class Applicatie {
 //        }
 //        System.out.println();
 //
-//        String gbdatum = "1963-03-15";
-//        Reiziger Peter = new Reiziger(6, "P", null, "Parker", java.sql.Date.valueOf(gbdatum));
+        String gbdatum = "1963-03-15";
+        Reiziger Peter = new Reiziger(6, "P", null, "Parker", java.sql.Date.valueOf(gbdatum));
 
 //
 //        //create
 //        String vervalDatum = "2999-12-31";
 //        OVChipkaart ovc = new OVChipkaart(00002, java.sql.Date.valueOf(vervalDatum), 2, 10000, 6);
-//        String vervalDatum2 = "2030-12-31";
-//        OVChipkaart ovc2 = new OVChipkaart(00003, java.sql.Date.valueOf(vervalDatum2), 2, 90000, 6);
 //
-//        ovdao.save(ovc2);
+//        ovdao.save(ovc);
 //
 //        //update
 //        ovdao.update(ovc);
 //
 //        //read
-//        ovdao.findAll();
-//        List<OVChipkaart> ovchipkaarten = ovdao.findByReiziger(Peter);
+//        System.out.println(ovdao.findByReiziger(Peter));
+
+//
+//        //delete
+//        ovdao.delete(ovc);
+    }
+
+    private static void testProductDAO(ProductDAO pDAO, OVChipkaartDAO ovdao) throws SQLException {
+        System.out.println("\n---------- Test ProductDAO -------------");
+
+        List<Product> producten = pDAO.findAll();
+        for(Product p : producten) {
+            System.out.println(p);
+        }
+        System.out.println();
+
+//        List<OVChipkaart> ovchipkaarten = ovdao.findAll();
 //        for(OVChipkaart ovc : ovchipkaarten) {
 //            System.out.println(ovc);
 //        }
 //        System.out.println();
 
-//
-//        //delete
-//        ovdao.delete(ovc2);
-
-
-        // de OVChipkaart moet ook de reiziger returnen, en vice verza
-    }
-
-    private static void testProductDAO(ProductDAO pDAO) throws SQLException {
-        System.out.println("\n---------- Test ProductDAO -------------");
-
-//        List<Product> producten = pDAO.findAll();
-//        for(Product p : producten) {
-//            System.out.println(p);
-//        }
-//        System.out.println();
-
-//        Product patent = new Product(7, "TBA", "idk", 0.01);
+//        Product patent = new Product(7, "IDC", "idk", 0.01);
+//        pDAO.save(patent);
+//        pDAO.update(patent);
 //        pDAO.delete(patent);
 
     }

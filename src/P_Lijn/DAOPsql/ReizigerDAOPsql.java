@@ -50,6 +50,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setDate(5, (Date) reiziger.getGeboortedatum());
             st.executeQuery();
             adao.save(reiziger.getAdres());
+//            ovdao.save(reiziger.getOvchipkaarten());
             return true;
         } catch(Exception e){
             System.out.println(e.getMessage());
@@ -89,6 +90,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setInt(1, reiziger.getReiziger_id());
             st.executeUpdate();
             adao.delete(reiziger.getAdres());
+//            ovdao.delete(reiziger.getOvchipkaarten());
         } catch(Exception e){
             System.out.println(e.getMessage());
             return false;

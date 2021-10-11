@@ -83,11 +83,13 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
             st.setInt(1, reiziger.getReiziger_id());
             ResultSet rs = st.executeQuery();
             while(rs.next()) {  // ovchipkaart moet extra variabele met Reiziger krijgen
-                OVChipkaart ovc = new OVChipkaart(rs.getInt(1),
+                OVChipkaart ovc = new OVChipkaart(
+                        rs.getInt(1),
                         rs.getDate(2),
                         rs.getInt(3),
                         rs.getFloat(4),
                         rs.getInt(5));
+//                ovc.setReiziger_id(Reiziger.getReiziger_id());
                 ovc.setReiziger(reiziger);
                 kaarten.add(ovc);
 //                OVChipkaart.setReiziger(rdao.getReiziger_id());
@@ -106,6 +108,14 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
     public List<OVChipkaart> findAll(){
         List<OVChipkaart> ovchipkaarten = new ArrayList<>();
         try {
+//            (
+//                    PreparedStatement st = conn.prepareStatement("SELECT * FROM ov_chipkaart");
+//            ResultSet rs = st.executeQuery())
+//            String query = "SELECT * FROM ov_chipkaart";
+//            (PreparedStatement st = conn.prepareStatement(query);
+//            ResultSet rs = st.executeQuery())
+//            List<OVChipkaart> ovchipkaarten = new ArrayList<>();
+
             String query = "SELECT * FROM ov_chipkaart";
             PreparedStatement st = conn.prepareStatement(query);
             ResultSet rs = st.executeQuery();
@@ -116,7 +126,10 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
                         rs.getInt(3),
                         rs.getFloat(4),
                         rs.getInt(5));
-                ovc.setReiziger(rdao.findById(ovc.getReiziger_id()));
+//                int r_id = rs.getInt("reiziger_id");
+//                ovc.setReiziger(rdao.findById(r_id));
+                ovc.setReiziger(rdao.findById(ovc.reiziger_id));
+//                ovc.getReiziger_id();
                 ovchipkaarten.add(ovc);
             } return ovchipkaarten;
         } catch (SQLException e) {
