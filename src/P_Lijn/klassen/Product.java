@@ -52,6 +52,6 @@ public class Product {
 
     public String toString(){
         return "p_nummer: " + product_nummer + " naam: " + naam + " beschrijving: " +
-                beschrijving + " prijs: " + prijs;// + ovchipkaart.toString();
+                beschrijving + " prijs: " + prijs + " " + ovchipkaart.toString();
     }
 }

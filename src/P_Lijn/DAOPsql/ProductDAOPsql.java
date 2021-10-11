@@ -2,6 +2,7 @@ package P_Lijn.DAOPsql;
 
 import P_Lijn.DAO.OVChipkaartDAO;
 import P_Lijn.DAO.ProductDAO;
+import P_Lijn.klassen.OVChipkaart;
 import P_Lijn.klassen.Product;
 import P_Lijn.klassen.Reiziger;
 
@@ -76,28 +77,32 @@ public class ProductDAOPsql implements ProductDAO {
     }
 
     @Override
-    public List<Product> findByOVChipkaart() {
+    public List<Product> findByOVChipkaart(OVChipkaart ovChipkaart) {
         return null;
     }
 
     @Override
     public List<Product> findAll(){
-        List<Product> producten = new ArrayList<>();
-        try {
-            String query = "SELECT * FROM product";
-            PreparedStatement st = conn.prepareStatement(query);
-            ResultSet rs = st.executeQuery();
-            while(rs.next()) {
-                producten.add(new Product(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getDouble(4)));
-            }
-            return producten;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
         return null;
     }
+//        List<Product> producten = new ArrayList<>();
+//        try {
+//            String query = "SELECT * FROM product";
+//            PreparedStatement st = conn.prepareStatement(query);
+//            ResultSet rs = st.executeQuery();
+//            while(rs.next()) {
+//                Product p = new Product(rs.getInt(1),
+//                        rs.getString(2),
+//                        rs.getString(3),
+//                        rs.getDouble(4));
+////                p.getOvchipkaart(ovcDAO.);
+////                ovc.setReiziger(rdao.findById(ovc.reiziger_id));
+//                producten.add(p);
+//            }
+//            return producten;
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
+//    }
 }

@@ -76,9 +76,15 @@ public class OVChipkaart {
         return product;
     }
 
+//    public String toString(){
+//        return "nummer: " + kaart_nummer + " geldig tot: " + geldig_tot + " klasse: " + klasse +
+//                " saldo: €" + saldo + " reiziger_id: " + reiziger_id + " " + reiziger.toString();
+////        return String.format("Nummer %s geldig tot: %s klasse: %d saldo: € %f reiziger_id: %d");
+//    }
+
     public String toString(){
         return "nummer: " + kaart_nummer + " geldig tot: " + geldig_tot + " klasse: " + klasse +
-                " saldo: €" + saldo + " reiziger_id: " + reiziger_id + " " + reiziger.toString();
+                " saldo: €" + saldo + " reiziger_id: " + reiziger_id + " " + product.toString();
 //        return String.format("Nummer %s geldig tot: %s klasse: %d saldo: € %f reiziger_id: %d");
     }
 }

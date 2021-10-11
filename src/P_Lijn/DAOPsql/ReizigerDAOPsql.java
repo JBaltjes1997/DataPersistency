@@ -14,7 +14,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     private Connection conn;
     private AdresDAO adao;
     private OVChipkaartDAO ovdao;
-//    private ArrayList<OVChipkaartDAO> ovdao;
+//    private ArrayList<OVChipkaart> ovKaarten;
     // ov dao toevoegen, for-ech loop toepassen
 
 
@@ -49,9 +49,16 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setString(4, reiziger.getAchternaam());
             st.setDate(5, (Date) reiziger.getGeboortedatum());
             st.executeQuery();
+
             adao.save(reiziger.getAdres());
-//            ovdao.save(reiziger.getOvchipkaarten());
-            return true;
+
+            ArrayList<OVChipkaart> ovKaarten = reiziger.getOvchipkaarten();
+            for(OVChipkaart ovc : ovKaarten){
+                if(ovKaarten.size() != 0) {
+                    ovdao.save(ovc);
+                }
+            } return true;
+
         } catch(Exception e){
             System.out.println(e.getMessage());
             return false;
@@ -71,11 +78,22 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setDate(5, (Date) reiziger.getGeboortedatum());
             st.setInt(6, reiziger.getReiziger_id());
             st.executeUpdate();
+
             if(adao.findByReiziger(reiziger) != null) {
                 adao.update(reiziger.getAdres());
             } else {
                 adao.save(reiziger.getAdres());
             }
+
+            ArrayList<OVChipkaart> ovKaarten = reiziger.getOvchipkaarten();
+            for(OVChipkaart ovc : ovKaarten) {
+                if (ovKaarten.size() != 0) {
+                    ovdao.update(ovc);
+                } else {
+                    ovdao.save(ovc);
+                }
+            }
+
         } catch (Exception e){
             System.out.println(e.getMessage());
             return false;
@@ -90,7 +108,14 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setInt(1, reiziger.getReiziger_id());
             st.executeUpdate();
             adao.delete(reiziger.getAdres());
-//            ovdao.delete(reiziger.getOvchipkaarten());
+
+            ArrayList<OVChipkaart> ovKaarten = reiziger.getOvchipkaarten();
+            for(OVChipkaart ovc : ovKaarten){
+                if (ovKaarten.size() != 0) {
+                    ovdao.delete(ovc);
+                }
+            }
+
         } catch(Exception e){
             System.out.println(e.getMessage());
             return false;
