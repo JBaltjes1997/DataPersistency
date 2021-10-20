@@ -36,6 +36,15 @@ public class ProductDAOPsql implements ProductDAO {
             st.setString(3, product.getBeschrijving());
             st.setDouble(4, product.getPrijs());
             st.executeQuery();
+
+            if(product.getOvchipkaarten().size() >= 1){
+                for(OVChipkaart ovc : product.getOvchipkaarten()){
+                    ovcDAO.save(ovc);
+                }
+            }
+
+            st.close();
+
             return true;
         } catch (SQLException e){
             System.out.println(e.getMessage());
@@ -55,7 +64,18 @@ public class ProductDAOPsql implements ProductDAO {
             st.setDouble(4, product.getPrijs());
             st.setInt(5, product.getProduct_nummer());
             st.executeUpdate();
+
+
+            if(product.getOvchipkaarten().size() >= 1) {
+                for (OVChipkaart ovc : product.getOvchipkaarten()) {
+                    ovcDAO.update(ovc);
+                }
+            }
+
+            st.close();
+
             return true;
+
         } catch (Exception e){
             System.out.println(e.getMessage());
             return false;
@@ -69,6 +89,14 @@ public class ProductDAOPsql implements ProductDAO {
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, product.getProduct_nummer());
             st.executeUpdate();
+
+            ArrayList<OVChipkaart> ovKaarten = product.getOvchipkaarten();
+            for(OVChipkaart ovc : ovKaarten){
+                if (ovKaarten.size() != 0) {
+                    ovcDAO.delete(ovc);
+                }
+            }
+
         } catch(Exception e){
             System.out.println(e.getMessage());
             return false;
@@ -78,31 +106,62 @@ public class ProductDAOPsql implements ProductDAO {
 
     @Override
     public List<Product> findByOVChipkaart(OVChipkaart ovChipkaart) {
-        return null;
+        ArrayList<Product> producten = new ArrayList<>();
+        try {
+            String query = "select product.product_nummer, naam, beschrijving, prijs\n" +
+                    "from product\n" +
+                    "join ov_chipkaart_product\n" +
+                    "on ov_chipkaart_product.product_nummer = product.product_nummer\n" +
+                    "where ov_chipkaart_product.kaart_nummer = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, ovChipkaart.getKaart_nummer());
+            ResultSet rs = st.executeQuery();
+            while(rs.next()) {
+                Product p = new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getFloat(4));
+                p.addOvchipkaart(ovChipkaart);
+                producten.add(p);
+            }
+
+            st.close();
+
+            return producten;
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
 
     @Override
     public List<Product> findAll(){
+
+        List<Product> producten = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM product";
+            PreparedStatement st = conn.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()) {
+                Product p = new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4));
+//                p.addOvchipkaart(ovcDAO.find);
+
+            producten.add(p);
+            }
+
+            rs.close();
+            st.close();
+            return producten;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
         return null;
     }
-//        List<Product> producten = new ArrayList<>();
-//        try {
-//            String query = "SELECT * FROM product";
-//            PreparedStatement st = conn.prepareStatement(query);
-//            ResultSet rs = st.executeQuery();
-//            while(rs.next()) {
-//                Product p = new Product(rs.getInt(1),
-//                        rs.getString(2),
-//                        rs.getString(3),
-//                        rs.getDouble(4));
-////                p.getOvchipkaart(ovcDAO.);
-////                ovc.setReiziger(rdao.findById(ovc.reiziger_id));
-//                producten.add(p);
-//            }
-//            return producten;
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return null;
-//    }
 }

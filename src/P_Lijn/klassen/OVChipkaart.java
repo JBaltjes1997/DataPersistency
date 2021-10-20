@@ -1,5 +1,6 @@
 package P_Lijn.klassen;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class OVChipkaart {
     public float saldo;
     public int reiziger_id;
     public Reiziger reiziger;
-    public Product product;
+    public ArrayList<Product> producten = new ArrayList<>();
 
     public OVChipkaart(int kaart_nummer, Date geldig_tot, int klasse, float saldo, int reiziger_id) {
         this.kaart_nummer = kaart_nummer;
@@ -68,23 +69,26 @@ public class OVChipkaart {
         return reiziger;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public ArrayList<Product> getProducten() {
+        return producten;
     }
 
-    public Product getProduct(){
-        return product;
+    public void setProducten(ArrayList<Product> producten) {
+        this.producten = producten;
     }
 
-//    public String toString(){
-//        return "nummer: " + kaart_nummer + " geldig tot: " + geldig_tot + " klasse: " + klasse +
-//                " saldo: €" + saldo + " reiziger_id: " + reiziger_id + " " + reiziger.toString();
-////        return String.format("Nummer %s geldig tot: %s klasse: %d saldo: € %f reiziger_id: %d");
-//    }
+    public void addProduct(Product product) {
+        if (!producten.contains(product)) {
+            producten.add(product);
+        }
+    }
 
-    public String toString(){
-        return "nummer: " + kaart_nummer + " geldig tot: " + geldig_tot + " klasse: " + klasse +
-                " saldo: €" + saldo + " reiziger_id: " + reiziger_id + " " + product.toString();
-//        return String.format("Nummer %s geldig tot: %s klasse: %d saldo: € %f reiziger_id: %d");
+    @Override
+    public String toString() {
+        return "OVChipkaart{" +
+                "kaart_nummer=" + kaart_nummer +
+//                ", reiziger=" + reiziger +
+                ", producten=" + producten +
+                '}';
     }
 }

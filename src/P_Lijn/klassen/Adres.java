@@ -70,20 +70,11 @@ public class Adres {
 
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Adres adres = (Adres) o;
-        return reiziger_id == adres.reiziger_id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(reiziger_id);
-    }
-
-    public String toString(){
-        return String.format("# %s postcode: %s straat: %s huisnummer: %s woonplaats: %s reiziger_id: %d",
-                adres_id, postcode, straat, huisnummer, woonplaats, reiziger_id);
+    public String toString() {
+        return "Adres{" +
+                "adres_id=" + adres_id +
+                ", postcode='" + postcode + '\'' +
+                ", huisnummer='" + huisnummer + '\'' +
+                '}';
     }
 }

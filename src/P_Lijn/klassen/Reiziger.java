@@ -10,7 +10,7 @@ public class Reiziger {
     private String achternaam;
     private Date geboortedatum;
     private Adres reizigerAdres;
-    private ArrayList<OVChipkaart> ovchipkaarten;
+    private ArrayList<OVChipkaart> ovchipkaarten = new ArrayList<>();
 
     public Reiziger(int reiziger_id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum) {
         this.reiziger_id = reiziger_id;
@@ -18,6 +18,9 @@ public class Reiziger {
         this.tussenvoegsel = tussenvoegsel;
         this.achternaam = achternaam;
         this.geboortedatum = geboortedatum;
+    }
+
+    public Reiziger() {
     }
 
     public int getReiziger_id() {
@@ -61,11 +64,11 @@ public class Reiziger {
     }
 
 
-    public void setAdres(Adres a){
+    public void setAdres(Adres a) {
         reizigerAdres = a;
     }
 
-    public Adres getAdres(){
+    public Adres getAdres() {
         return reizigerAdres;
     }
 
@@ -78,19 +81,19 @@ public class Reiziger {
         return ovchipkaarten;
     }
 
-
-    public String toString(){
-        if(tussenvoegsel == null ) {
-            if(reizigerAdres == null){
-                return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ") " +
-                         " " + ovchipkaarten.toString();
-            } else {
-                return "#" + reiziger_id + ": " + voorletters + ". " + achternaam + " (" + geboortedatum + ") " +
-                        reizigerAdres.toString() + " " + ovchipkaarten.toString();
-            }
-        } else {
-            return "#" + reiziger_id + ": " + voorletters + ". " + tussenvoegsel + " " + achternaam +
-                    " (" + geboortedatum + ") " + reizigerAdres.toString() + " " + ovchipkaarten.toString();
+    public void addOvchipkaart(OVChipkaart ovchipkaart) {
+        if (!ovchipkaarten.contains(ovchipkaart)) {
+            ovchipkaarten.add(ovchipkaart);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Reiziger{" +
+                "reiziger_id=" + reiziger_id +
+                ", reizigerAdres=" + reizigerAdres +
+                ", OVChipkaart=" + ovchipkaarten +
+                '}';
+    }
 }
+
