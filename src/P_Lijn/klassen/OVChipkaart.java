@@ -88,7 +88,7 @@ public class OVChipkaart {
         return "OVChipkaart{" +
                 "kaart_nummer=" + kaart_nummer +
 //                ", reiziger=" + reiziger +
-                ", producten=" + producten +
+//                ", producten=" + producten +
                 '}';
     }
 }

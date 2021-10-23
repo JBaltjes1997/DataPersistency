@@ -39,7 +39,7 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
 
             if(ovchipkaart.getProducten().size() != 0){
                   for(Product p : ovchipkaart.getProducten()){
-                    pdao.save(p);
+                    pdao.update(p);
                 }
             }
 
@@ -56,6 +56,12 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
     @Override
     public boolean update(OVChipkaart ovchipkaart){
         try{
+            if(ovchipkaart.getProducten().size() != 0){
+                for(Product p : ovchipkaart.getProducten()){
+                    pdao.update(p);
+                }
+            }
+
             String query = "UPDATE ov_chipkaart SET geldig_tot = ?, klasse = ?, saldo = ?" +
                     "WHERE kaart_nummer = ?";
             PreparedStatement st = conn.prepareStatement(query);
@@ -77,6 +83,12 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
     @Override
     public boolean delete(OVChipkaart ovchipkaart){
         try{
+
+            if(ovchipkaart.getProducten().size() != 0){
+                for(Product p : ovchipkaart.getProducten()){
+                    pdao.update(p);
+                }
+            }
             String query = "DELETE from ov_chipkaart WHERE kaart_nummer = ? ";
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, ovchipkaart.getKaart_nummer());
@@ -131,7 +143,11 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
                         rs.getInt(3),
                         rs.getFloat(4),
                         rs.getInt(5));
-//                ovc.setReiziger(rdao.findById(rs.getInt(5)));
+                ovc.setReiziger(rdao.findById(rs.getInt(5)));
+//                for(Product p : pdao.findByOVChipkaart(ovc)){
+//                    ovc.addProduct(p);
+//                }
+                pdao.findByOVChipkaart(ovc);
                 kaarten.add(ovc);
             }
 

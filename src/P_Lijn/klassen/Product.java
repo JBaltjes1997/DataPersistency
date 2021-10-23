@@ -66,7 +66,10 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "product_nummer=" + product_nummer +
-//                ", ovchipkaarten=" + ovchipkaarten +
+                ", naam='" + naam + '\'' +
+//                ", beschrijving='" + beschrijving + '\'' +
+//                ", prijs=" + prijs +
+                ", ovchipkaarten=" + ovchipkaarten +
                 '}';
     }
 }

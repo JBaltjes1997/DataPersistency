@@ -37,9 +37,18 @@ public class ProductDAOPsql implements ProductDAO {
             st.setDouble(4, product.getPrijs());
             st.executeQuery();
 
-            if(product.getOvchipkaarten().size() >= 1){
+            if(product.getOvchipkaarten().size() != 0){
                 for(OVChipkaart ovc : product.getOvchipkaarten()){
-                    ovcDAO.save(ovc);
+                    String query2 = "INSERT INTO ov_chipkaart(kaart_nummer, geldig_tot, klasse, saldo, reiziger_id) " +
+                            "values(?,?,?,?,?)";
+                    PreparedStatement st2 = conn.prepareStatement(query2);
+                    st2.setInt(1, ovc.getKaart_nummer());
+                    st2.setDate(2, (java.sql.Date) ovc.getGeldig_tot());
+                    st2.setInt(3, ovc.getKlasse());
+                    st2.setFloat(4, ovc.getSaldo());
+                    st2.setInt(5, ovc.getReiziger_id());
+                    st2.executeQuery();
+                    st2.close();
                 }
             }
 
@@ -54,7 +63,7 @@ public class ProductDAOPsql implements ProductDAO {
 
     @Override
     public boolean update(Product product) {
-        try{
+        try {
             String query = "UPDATE product SET product_nummer = ?, naam = ?, beschrijving = ?, prijs = ?" +
                     "WHERE product_nummer = ?";
             PreparedStatement st = conn.prepareStatement(query);
@@ -65,10 +74,25 @@ public class ProductDAOPsql implements ProductDAO {
             st.setInt(5, product.getProduct_nummer());
             st.executeUpdate();
 
-
-            if(product.getOvchipkaarten().size() >= 1) {
+            if (product.getOvchipkaarten().size() != 0) {
                 for (OVChipkaart ovc : product.getOvchipkaarten()) {
-                    ovcDAO.update(ovc);
+                    String query2 = "DELETE FROM ov_chipkaart_product " +
+                            "WHERE kaart_nummer = ? AND product_nummer = ?";
+                    PreparedStatement st2 = conn.prepareStatement(query2);
+                    st2.setInt(1, ovc.getKaart_nummer());
+                    st2.setInt(2, product.getProduct_nummer());
+                    st2.executeQuery();
+                    st2.close();
+                }
+
+                for (OVChipkaart ovc : product.getOvchipkaarten()) {
+                    String query3 = "INSERT INTO ov_chipkaart_product " +
+                            "(kaart_nummer, product_nummer), VALUES(?,?) ";
+                    PreparedStatement st3 = conn.prepareStatement(query3);
+                    st3.setInt(1, ovc.getKaart_nummer());
+                    st3.setInt(2, product.getProduct_nummer());
+                    st3.executeQuery();
+                    st3.close();
                 }
             }
 
@@ -76,15 +100,27 @@ public class ProductDAOPsql implements ProductDAO {
 
             return true;
 
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-            return false;
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+                return false;
+            }
         }
-    }
 
     @Override
     public boolean delete(Product product) {
         try{
+            if(product.getOvchipkaarten().size() != 0){
+                for(OVChipkaart ovc : product.getOvchipkaarten()){
+                    String query2 = "DELETE FROM ov_chipkaart_product " +
+                            "where kaart_nummer = ? and product_nummer = ?";
+                    PreparedStatement st = conn.prepareStatement(query2);
+                    st.setInt(1, ovc.getKaart_nummer());
+                    st.setInt(2, product.getProduct_nummer());
+                    st.executeQuery(query2);
+                    st.close();
+                }
+            }
+
             String query = "DELETE from product WHERE product_nummer = ? ";
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, product.getProduct_nummer());
@@ -108,11 +144,17 @@ public class ProductDAOPsql implements ProductDAO {
     public List<Product> findByOVChipkaart(OVChipkaart ovChipkaart) {
         ArrayList<Product> producten = new ArrayList<>();
         try {
-            String query = "select product.product_nummer, naam, beschrijving, prijs\n" +
-                    "from product\n" +
-                    "join ov_chipkaart_product\n" +
-                    "on ov_chipkaart_product.product_nummer = product.product_nummer\n" +
-                    "where ov_chipkaart_product.kaart_nummer = ?";
+//            String query = "select product.product_nummer, naam, beschrijving, prijs " +
+//                    "from product" +
+//                    "inner join ov_chipkaart_product" +
+//                    "on ov_chipkaart_product.product_nummer = product.product_nummer " +
+//                    "and ov_chipkaart_product.kaart_nummer = ?";
+
+            String query = "select product.product_nummer, naam, beschrijving, prijs " +
+                    "from product" +
+                    " inner join ov_chipkaart_product" +
+                    " on ov_chipkaart_product.product_nummer = product.product_nummer " +
+                    "and ov_chipkaart_product.kaart_nummer = ?";
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, ovChipkaart.getKaart_nummer());
             ResultSet rs = st.executeQuery();
@@ -123,10 +165,12 @@ public class ProductDAOPsql implements ProductDAO {
                         rs.getString(3),
                         rs.getFloat(4));
                 p.addOvchipkaart(ovChipkaart);
+                ovChipkaart.addProduct(p);
                 producten.add(p);
             }
 
             st.close();
+            rs.close();
 
             return producten;
 
@@ -150,9 +194,7 @@ public class ProductDAOPsql implements ProductDAO {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getDouble(4));
-//                p.addOvchipkaart(ovcDAO.find);
-
-            producten.add(p);
+                producten.add(p);
             }
 
             rs.close();
