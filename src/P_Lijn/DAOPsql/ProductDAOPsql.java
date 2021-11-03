@@ -29,7 +29,7 @@ public class ProductDAOPsql implements ProductDAO {
     public boolean save(Product product) {
         try{
             String query = "INSERT INTO product(product_nummer, naam, beschrijving, prijs) " +
-                    "values(?,?,?,?)";
+                    "values(?,?,?,?)";                              // hier maak ik een nieuw product aan
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, product.getProduct_nummer());
             st.setString(2, product.getNaam());
@@ -37,7 +37,7 @@ public class ProductDAOPsql implements ProductDAO {
             st.setDouble(4, product.getPrijs());
             st.executeQuery();
 
-            if(product.getOvchipkaarten().size() != 0){
+            if(product.getOvchipkaarten().size() != 0){             // ?????????????
                 for(OVChipkaart ovc : product.getOvchipkaarten()){
                     String query2 = "INSERT INTO ov_chipkaart(kaart_nummer, geldig_tot, klasse, saldo, reiziger_id) " +
                             "values(?,?,?,?,?)";
@@ -64,15 +64,15 @@ public class ProductDAOPsql implements ProductDAO {
     @Override
     public boolean update(Product product) {
         try {
-            String query = "UPDATE product SET product_nummer = ?, naam = ?, beschrijving = ?, prijs = ?" +
-                    "WHERE product_nummer = ?";
+            String query = "UPDATE product SET naam = ?, beschrijving = ?, prijs = ?" +
+                    "WHERE product_nummer = ?";                     // update product
             PreparedStatement st = conn.prepareStatement(query);
-            st.setInt(1, product.getProduct_nummer());
-            st.setString(2, product.getNaam());
-            st.setString(3, product.getBeschrijving());
-            st.setDouble(4, product.getPrijs());
-            st.setInt(5, product.getProduct_nummer());
+            st.setString(1, product.getNaam());
+            st.setString(2, product.getBeschrijving());
+            st.setDouble(3, product.getPrijs());
+            st.setInt(4, product.getProduct_nummer());
             st.executeUpdate();
+            st.close();
 
             if (product.getOvchipkaarten().size() != 0) {
                 for (OVChipkaart ovc : product.getOvchipkaarten()) {
@@ -81,11 +81,12 @@ public class ProductDAOPsql implements ProductDAO {
                     PreparedStatement st2 = conn.prepareStatement(query2);
                     st2.setInt(1, ovc.getKaart_nummer());
                     st2.setInt(2, product.getProduct_nummer());
+
                     st2.executeQuery();
                     st2.close();
                 }
 
-                for (OVChipkaart ovc : product.getOvchipkaarten()) {
+                for (OVChipkaart ovc : product.getOvchipkaarten()) {        // misschien dit in de save zetten??
                     String query3 = "INSERT INTO ov_chipkaart_product " +
                             "(kaart_nummer, product_nummer), VALUES(?,?) ";
                     PreparedStatement st3 = conn.prepareStatement(query3);
@@ -116,7 +117,8 @@ public class ProductDAOPsql implements ProductDAO {
                     PreparedStatement st = conn.prepareStatement(query2);
                     st.setInt(1, ovc.getKaart_nummer());
                     st.setInt(2, product.getProduct_nummer());
-                    st.executeQuery(query2);
+
+                    st.executeQuery();
                     st.close();
                 }
             }
@@ -126,12 +128,13 @@ public class ProductDAOPsql implements ProductDAO {
             st.setInt(1, product.getProduct_nummer());
             st.executeUpdate();
 
-            ArrayList<OVChipkaart> ovKaarten = product.getOvchipkaarten();
-            for(OVChipkaart ovc : ovKaarten){
-                if (ovKaarten.size() != 0) {
-                    ovcDAO.delete(ovc);
-                }
-            }
+//            ArrayList<OVChipkaart> ovKaarten = product.getOvchipkaarten();
+//            for(OVChipkaart ovc : ovKaarten){
+//                if (ovKaarten.size() != 0) {
+//                    ovcDAO.delete(ovc);
+//                }
+//            }
+            st.close();
 
         } catch(Exception e){
             System.out.println(e.getMessage());
@@ -144,20 +147,17 @@ public class ProductDAOPsql implements ProductDAO {
     public List<Product> findByOVChipkaart(OVChipkaart ovChipkaart) {
         ArrayList<Product> producten = new ArrayList<>();
         try {
-//            String query = "select product.product_nummer, naam, beschrijving, prijs " +
-//                    "from product" +
-//                    "inner join ov_chipkaart_product" +
-//                    "on ov_chipkaart_product.product_nummer = product.product_nummer " +
-//                    "and ov_chipkaart_product.kaart_nummer = ?";
+            String query = "select p.product_nummer, p.naam, p.beschrijving, p.prijs " +
+                    "from product p" +
+                    " inner join ov_chipkaart_product ovp" +
+                    " on ovp.product_nummer = p.product_nummer " +
+                    "and ovp.kaart_nummer = ?";
 
-            String query = "select product.product_nummer, naam, beschrijving, prijs " +
-                    "from product" +
-                    " inner join ov_chipkaart_product" +
-                    " on ov_chipkaart_product.product_nummer = product.product_nummer " +
-                    "and ov_chipkaart_product.kaart_nummer = ?";
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, ovChipkaart.getKaart_nummer());
+
             ResultSet rs = st.executeQuery();
+
             while(rs.next()) {
                 Product p = new Product(
                         rs.getInt(1),
@@ -183,12 +183,13 @@ public class ProductDAOPsql implements ProductDAO {
 
     @Override
     public List<Product> findAll(){
-
-        List<Product> producten = new ArrayList<>();
         try {
             String query = "SELECT * FROM product";
             PreparedStatement st = conn.prepareStatement(query);
             ResultSet rs = st.executeQuery();
+
+            List<Product> producten = new ArrayList<>();
+
             while(rs.next()) {
                 Product p = new Product(rs.getInt(1),
                         rs.getString(2),

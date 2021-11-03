@@ -24,6 +24,10 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
         this.rdao = rdao;
     }
 
+    public void setPdao(ProductDAO pdao) {
+        this.pdao = pdao;
+    }
+
     @Override
     public boolean save(OVChipkaart ovchipkaart){
         try{
@@ -144,9 +148,6 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
                         rs.getFloat(4),
                         rs.getInt(5));
                 ovc.setReiziger(rdao.findById(rs.getInt(5)));
-//                for(Product p : pdao.findByOVChipkaart(ovc)){
-//                    ovc.addProduct(p);
-//                }
                 pdao.findByOVChipkaart(ovc);
                 kaarten.add(ovc);
             }

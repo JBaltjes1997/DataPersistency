@@ -37,6 +37,7 @@ public class Applicatie {
         reizigerDao.setOvdao(ovcDAO);
         ovcDAO.setRdao(reizigerDao);
         pDAO.setOvcDAO(ovcDAO);
+        ovcDAO.setPdao(pDAO);
 
 //        testReizigerDAO(reizigerDao);
 //        testAdresDAO(adresDao, reizigerDao);
@@ -146,8 +147,6 @@ public class Applicatie {
         //update
         ovdao.update(ovc);
 
-        //read
-        System.out.println(ovdao.findByReiziger(Peter));
 
         //delete
         ovdao.delete(ovc);
@@ -170,8 +169,10 @@ public class Applicatie {
 
 //        String vervalDatum = "2999-12-31";
 //        OVChipkaart ovc = new OVChipkaart(00002, java.sql.Date.valueOf(vervalDatum), 2, 10000, 6);
-//
-//        Product patent = new Product(7, "IDC", "idk", 0.01);
+
+//        ovdao.save(ovc);
+
+//        Product patent = new Product(7, "CIA", "idk", 0.01);
 //
 //        pDAO.save(patent);
 //
@@ -180,7 +181,7 @@ public class Applicatie {
 //        System.out.println(pDAO.findByOVChipkaart(ovc));
 
 //        pDAO.update(patent);
+//
 //        pDAO.delete(patent);
-
     }
 }

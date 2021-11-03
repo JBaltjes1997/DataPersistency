@@ -92,7 +92,7 @@ public class Reiziger {
         return "Reiziger{" +
                 "reiziger_id=" + reiziger_id +
                 ", reizigerAdres=" + reizigerAdres +
-                ", OVChipkaart=" + ovchipkaarten +
+//                ", OVChipkaart=" + ovchipkaarten +
                 '}';
     }
 }
