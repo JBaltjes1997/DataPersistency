@@ -155,11 +155,11 @@ public class Applicatie {
     private static void testProductDAO(ProductDAO pDAO, OVChipkaartDAO ovdao) throws SQLException {
         System.out.println("\n---------- Test ProductDAO -------------");
 
-        List<Product> producten = pDAO.findAll();
-        for(Product p : producten) {
-            System.out.println(p);
-        }
-        System.out.println();
+//        List<Product> producten = pDAO.findAll();
+//        for(Product p : producten) {
+//            System.out.println(p);
+//        }
+//        System.out.println();
 
 //        List<OVChipkaart> ovchipkaarten = ovdao.findAll();
 //        for(OVChipkaart ovc : ovchipkaarten) {
@@ -167,18 +167,18 @@ public class Applicatie {
 //        }
 //        System.out.println();
 
-//        String vervalDatum = "2999-12-31";
-//        OVChipkaart ovc = new OVChipkaart(00002, java.sql.Date.valueOf(vervalDatum), 2, 10000, 6);
+        String vervalDatum = "2999-12-31";
+        OVChipkaart ovc = new OVChipkaart(00002, java.sql.Date.valueOf(vervalDatum), 2, 10000, 6);
 
 //        ovdao.save(ovc);
 
-//        Product patent = new Product(7, "CIA", "idk", 0.01);
+        Product patent = new Product(7, "CIA", "idk", 0.01);
 //
 //        pDAO.save(patent);
 //
-//        ovc.addProduct(patent);
+        ovc.addProduct(patent);
 //
-//        System.out.println(pDAO.findByOVChipkaart(ovc));
+        System.out.println(pDAO.findByOVChipkaart(ovc));
 
 //        pDAO.update(patent);
 //

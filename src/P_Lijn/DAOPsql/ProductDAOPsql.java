@@ -195,6 +195,7 @@ public class ProductDAOPsql implements ProductDAO {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getDouble(4));
+                ovcDAO.findByProduct(p);
                 producten.add(p);
             }
 

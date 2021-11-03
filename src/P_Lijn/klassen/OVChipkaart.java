@@ -87,8 +87,8 @@ public class OVChipkaart {
     public String toString() {
         return "OVChipkaart{" +
                 "kaart_nummer=" + kaart_nummer +
-                ", reiziger=" + reiziger +
-                ", producten=" + producten +
+//                ", reiziger=" + reiziger +
+//                ", producten=" + producten +
                 '}';
     }
 }

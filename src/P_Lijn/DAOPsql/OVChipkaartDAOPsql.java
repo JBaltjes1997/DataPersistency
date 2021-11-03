@@ -134,6 +134,44 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
     }
 
     @Override
+    public List<OVChipkaart> findByProduct(Product  product){
+        ArrayList<OVChipkaart> kaarten = new ArrayList<>();
+        try {
+            String query = "select o.kaart_nummer, o.geldig_tot, o.klasse, o.saldo, o.reiziger_id " +
+                    "from ov_chipkaart o" +
+                    " inner join ov_chipkaart_product ovp" +
+                    " on ovp.kaart_nummer = o.kaart_nummer " +
+                    "and ovp.product_nummer = ?";
+
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, product.getProduct_nummer());
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                OVChipkaart ov = new OVChipkaart(
+                        rs.getInt(1),
+                        rs.getDate(2),
+                        rs.getInt(3),
+                        rs.getFloat(4),
+                        rs.getInt(5));
+                ov.addProduct(product);
+                product.addOvchipkaart(ov);
+                kaarten.add(ov);
+            }
+
+            st.close();
+            rs.close();
+
+            return kaarten;
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public List<OVChipkaart> findAll(){
         try{
             String query = "SELECT * FROM ov_chipkaart";
