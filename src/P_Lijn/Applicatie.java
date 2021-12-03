@@ -105,14 +105,6 @@ public class Applicatie {
 
         //delete
         adao.delete(adr);
-
-
-//         bij een persoon moet ook een adres aangemaakt worden?
-//         wanneer een persoon gedelete wordt dan ook diens adres
-//         idem dito de update
-//
-//         findBy() moet ook het adres tonen, maar niet anderson
-
     }
 
     private static void testOVChipkaartDAO(OVChipkaartDAO ovdao, ReizigerDAO rdao) throws SQLException{
@@ -147,7 +139,6 @@ public class Applicatie {
         //update
         ovdao.update(ovc);
 
-
         //delete
         ovdao.delete(ovc);
     }
@@ -155,32 +146,33 @@ public class Applicatie {
     private static void testProductDAO(ProductDAO pDAO, OVChipkaartDAO ovdao) throws SQLException {
         System.out.println("\n---------- Test ProductDAO -------------");
 
-//        List<Product> producten = pDAO.findAll();
-//        for(Product p : producten) {
-//            System.out.println(p);
-//        }
-//        System.out.println();
+        List<Product> producten = pDAO.findAll();
+        for(Product p : producten) {
+            System.out.println(p);
+        }
+        System.out.println();
 
-//        List<OVChipkaart> ovchipkaarten = ovdao.findAll();
-//        for(OVChipkaart ovc : ovchipkaarten) {
-//            System.out.println(ovc);
-//        }
-//        System.out.println();
+        List<OVChipkaart> ovchipkaarten = ovdao.findAll();
+        for(OVChipkaart ovc : ovchipkaarten) {
+            System.out.println(ovc);
+        }
+        System.out.println();
 
         String vervalDatum = "2999-12-31";
         OVChipkaart ovc = new OVChipkaart(00002, java.sql.Date.valueOf(vervalDatum), 2, 10000, 6);
-
+//
 //        ovdao.save(ovc);
-
-        Product patent = new Product(7, "CIA", "idk", 0.01);
+//
+        Product patent = new Product(7, "FBI", "idk", 0.01);
 //
 //        pDAO.save(patent);
 //
         ovc.addProduct(patent);
+        patent.addOvchipkaart(ovc);
 //
-        System.out.println(pDAO.findByOVChipkaart(ovc));
-
-//        pDAO.update(patent);
+//        System.out.println(pDAO.findByOVChipkaart(ovc));
+//
+        pDAO.update(patent);
 //
 //        pDAO.delete(patent);
     }

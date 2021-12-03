@@ -29,7 +29,7 @@ public class ProductDAOPsql implements ProductDAO {
     public boolean save(Product product) {
         try{
             String query = "INSERT INTO product(product_nummer, naam, beschrijving, prijs) " +
-                    "values(?,?,?,?)";                              // hier maak ik een nieuw product aan
+                    "values(?,?,?,?)";
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, product.getProduct_nummer());
             st.setString(2, product.getNaam());
@@ -37,7 +37,7 @@ public class ProductDAOPsql implements ProductDAO {
             st.setDouble(4, product.getPrijs());
             st.executeQuery();
 
-            if(product.getOvchipkaarten().size() != 0){             // ?????????????
+            if(product.getOvchipkaarten().size() != 0){
                 for(OVChipkaart ovc : product.getOvchipkaarten()){
                     String query2 = "INSERT INTO ov_chipkaart(kaart_nummer, geldig_tot, klasse, saldo, reiziger_id) " +
                             "values(?,?,?,?,?)";
@@ -47,6 +47,7 @@ public class ProductDAOPsql implements ProductDAO {
                     st2.setInt(3, ovc.getKlasse());
                     st2.setFloat(4, ovc.getSaldo());
                     st2.setInt(5, ovc.getReiziger_id());
+
                     st2.executeQuery();
                     st2.close();
                 }
@@ -65,12 +66,14 @@ public class ProductDAOPsql implements ProductDAO {
     public boolean update(Product product) {
         try {
             String query = "UPDATE product SET naam = ?, beschrijving = ?, prijs = ?" +
-                    "WHERE product_nummer = ?";                     // update product
+                    "WHERE product_nummer = ?";
+
             PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, product.getNaam());
             st.setString(2, product.getBeschrijving());
             st.setDouble(3, product.getPrijs());
             st.setInt(4, product.getProduct_nummer());
+
             st.executeUpdate();
             st.close();
 
@@ -89,9 +92,11 @@ public class ProductDAOPsql implements ProductDAO {
                 for (OVChipkaart ovc : product.getOvchipkaarten()) {        // misschien dit in de save zetten??
                     String query3 = "INSERT INTO ov_chipkaart_product " +
                             "(kaart_nummer, product_nummer), VALUES(?,?) ";
+
                     PreparedStatement st3 = conn.prepareStatement(query3);
                     st3.setInt(1, ovc.getKaart_nummer());
                     st3.setInt(2, product.getProduct_nummer());
+
                     st3.executeQuery();
                     st3.close();
                 }
@@ -128,12 +133,6 @@ public class ProductDAOPsql implements ProductDAO {
             st.setInt(1, product.getProduct_nummer());
             st.executeUpdate();
 
-//            ArrayList<OVChipkaart> ovKaarten = product.getOvchipkaarten();
-//            for(OVChipkaart ovc : ovKaarten){
-//                if (ovKaarten.size() != 0) {
-//                    ovcDAO.delete(ovc);
-//                }
-//            }
             st.close();
 
         } catch(Exception e){
